@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" role="img" aria-label="Ride Aura Self Drive logo">
+  <defs>
+    <linearGradient id="auraRing" x1="38" y1="18" x2="166" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#08cbe8"/>
+      <stop offset="0.55" stop-color="#0ab4d2"/>
+      <stop offset="1" stop-color="#e8ad3f"/>
+    </linearGradient>
+    <linearGradient id="auraText" x1="286" y1="34" x2="397" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#08cbe8"/>
+      <stop offset="1" stop-color="#00a6c8"/>
+    </linearGradient>
+    <filter id="logoGlow" x="-15%" y="-25%" width="130%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#08cbe8" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="150" fill="none"/>
+
+  <g transform="translate(18 14)" filter="url(#logoGlow)">
+    <path d="M8 55c22-34 63-51 104-43 19 4 37 13 52 27" fill="none" stroke="#08cbe8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M15 90c19-24 48-37 81-35 27 1 51 12 69 31" fill="none" stroke="#e8ad3f" stroke-width="4" stroke-linecap="round"/>
+    <path d="M11 75c26 13 69 17 126 10" fill="none" stroke="#08cbe8" stroke-width="3" stroke-linecap="round" opacity=".95"/>
+
+    <path d="M36 68h22l18-20h48c15 0 31 8 41 21l12 16H25l11-17z" fill="#ffffff"/>
+    <path d="M79 52h42c13 0 24 6 33 16l5 6H65l14-22z" fill="#07162d"/>
+    <path d="M42 66h36l14-14H56l-14 14z" fill="#07162d"/>
+    <path d="M30 84h148" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M35 91c25 9 72 12 133 1" fill="none" stroke="#07162d" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="62" cy="92" r="10" fill="#07162d" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="139" cy="92" r="10" fill="#07162d" stroke="#ffffff" stroke-width="3"/>
+    <path d="M19 100c28 16 72 22 130 19" fill="none" stroke="url(#auraRing)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(202 36)">
+    <text x="0" y="39" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="900" fill="#ffffff" letter-spacing=".5">RIDE</text>
+    <text x="147" y="39" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="900" fill="url(#auraText)" letter-spacing=".5">AURA</text>
+    <path d="M0 62h112" stroke="#e8ad3f" stroke-width="3"/>
+    <path d="M262 62h60" stroke="#e8ad3f" stroke-width="3"/>
+    <text x="128" y="68" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="800" fill="#e8ad3f" letter-spacing="8">SELF DRIVE</text>
+  </g>
+</svg>

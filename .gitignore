@@ -1,0 +1,12 @@
+.env.local
+.env*.local
+node_modules/
+.next/
+out/
+dist/
+build/
+dev-server.log
+dev-server-error.log
+*.log
+.DS_Store
+Thumbs.db
