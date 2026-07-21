@@ -6,6 +6,7 @@ import { hasSupabase, supabase } from '@/lib/supabase';
 import './booking.css';
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650';
+const businessEmail = 'booking@rideauraselfdrive.co.in';
 const officeLocation = 'Saubhagya Nagar, Delta';
 
 function availabilityText(car: Car) {
@@ -33,11 +34,54 @@ function buildWhatsappLink(car: Car) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
 
+function formatDateTime(value: string) {
+  if (!value) return 'Not selected';
+
+  return new Date(value).toLocaleString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function buildBookingMessage(details: {
+  customerName: string;
+  phone: string;
+  pickupAt: string;
+  returnAt: string;
+  location: string;
+  carName: string;
+  licensePath: string;
+}) {
+  return [
+    'New Ride Aura booking request',
+    `Customer: ${details.customerName}`,
+    `Phone: ${details.phone}`,
+    `Car: ${details.carName}`,
+    `Pickup: ${formatDateTime(details.pickupAt)}`,
+    `Return: ${formatDateTime(details.returnAt)}`,
+    `Pickup location: ${details.location}`,
+    details.licensePath ? `License uploaded: ${details.licensePath}` : 'License uploaded: No',
+    'Please confirm availability and booking.'
+  ].join('\n');
+}
+
+function buildBookingWhatsappLink(message: string) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+function buildBookingEmailLink(subject: string, body: string) {
+  return `mailto:${businessEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 export default function Booking() {
   const [cars, setCars] = useState<Car[]>(sampleCars);
   const [selectedCarId, setSelectedCarId] = useState(sampleCars[0]?.id || '');
   const [checkedCarId, setCheckedCarId] = useState('');
   const [message, setMessage] = useState('');
+  const [notifyLinks, setNotifyLinks] = useState<{ whatsapp: string; email: string } | null>(null);
   const [loadingCars, setLoadingCars] = useState(true);
 
   const selectedCar = useMemo(
@@ -77,6 +121,12 @@ export default function Booking() {
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
+    const customerName = String(form.get('name') || '');
+    const phone = String(form.get('phone') || '');
+    const pickupAt = String(form.get('pickup_at') || '');
+    const returnAt = String(form.get('return_at') || '');
+    const location = String(form.get('location') || '');
+    const carName = selectedCar?.name || String(form.get('car_id') || '');
     let licensePath = '';
     const file = form.get('license') as File;
 
@@ -87,21 +137,45 @@ export default function Booking() {
     }
 
     const payload = {
-      customer_name: form.get('name'),
-      phone: form.get('phone'),
-      pickup_at: form.get('pickup_at'),
-      return_at: form.get('return_at'),
-      car_id: selectedCar?.name || form.get('car_id'),
-      location: form.get('location'),
+      customer_name: customerName,
+      phone,
+      pickup_at: pickupAt,
+      return_at: returnAt,
+      car_id: carName,
+      location,
       license_path: licensePath,
       status: 'Pending'
     };
 
+    const bookingMessage = buildBookingMessage({
+      customerName,
+      phone,
+      pickupAt,
+      returnAt,
+      location,
+      carName,
+      licensePath
+    });
+
+    const links = {
+      whatsapp: buildBookingWhatsappLink(bookingMessage),
+      email: buildBookingEmailLink(`New booking request - ${carName}`, bookingMessage)
+    };
+
     if (hasSupabase) {
       const { error } = await supabase!.from('bookings').insert(payload);
-      setMessage(error ? error.message : 'Booking request submitted successfully. Ride Aura will contact you shortly.');
+      if (error) {
+        setNotifyLinks(null);
+        setMessage(error.message);
+        return;
+      }
+
+      setNotifyLinks(links);
+      setMessage('Booking request submitted successfully. WhatsApp opened; email copy is ready below.');
+      window.open(links.whatsapp, '_blank', 'noopener,noreferrer');
     } else {
       console.log(payload);
+      setNotifyLinks(links);
       setMessage('Demo mode: booking captured in browser console. Add Supabase keys to save data.');
     }
   }
@@ -213,6 +287,17 @@ export default function Booking() {
             </a>
           )}
           {message && <p><b>{message}</b></p>}
+          {notifyLinks && (
+            <div className="availability-result">
+              <strong>Send booking details:</strong>
+              <a href={notifyLinks.whatsapp} target="_blank" rel="noopener noreferrer">
+                Open WhatsApp
+              </a>
+              <a href={notifyLinks.email}>
+                Send Email Copy
+              </a>
+            </div>
+          )}
         </form>
       </div>
     </main>
