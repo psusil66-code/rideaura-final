@@ -34,12 +34,6 @@ export default function Bookings() {
   async function loadBookings() {
     if (!supabase) return;
     const historyFrom = sixMonthsAgoIso();
-    const cleanup = await supabase.from('bookings').delete().lt('created_at', historyFrom);
-    if (cleanup.error) {
-      setMessage(cleanup.error.message);
-      return;
-    }
-
     const { data, error } = await supabase.from('bookings').select('*').gte('created_at', historyFrom).order('created_at', { ascending: false });
     if (error) setMessage(error.message);
     else setBookings((data || []) as Booking[]);
@@ -90,5 +84,5 @@ export default function Bookings() {
 
   if (loading) return <main className="admin-page"><p>Loading bookings...</p></main>;
 
-  return <main className="admin-page"><div className="admin-page-head"><div><h1>Booking History</h1><p>Showing Ride Aura booking requests from the last 6 months only. Older booking records are automatically removed.</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="admin-table-wrap"><table className="table"><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Car</th><th>Pickup</th><th>Return</th><th>Location</th><th>License</th><th>Status</th></tr></thead><tbody>{bookings.map(b=><tr key={b.id}><td>{b.id.slice(0,8)}</td><td>{b.customer_name}</td><td><a href={`tel:${b.phone}`}>{b.phone}</a></td><td>{b.car_id || '-'}</td><td>{b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</td><td>{b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</td><td>{b.location || '-'}</td><td>{b.license_path ? <button type="button" onClick={()=>getLicenseUrl(b.license_path)}>View</button> : '-'}</td><td><select value={b.status || 'Pending'} onChange={(e)=>updateStatus(b.id, e.target.value)}>{statuses.map(status=><option key={status}>{status}</option>)}</select></td></tr>)}{bookings.length === 0 && <tr><td colSpan={9}>No booking history in the last 6 months.</td></tr>}</tbody></table></div></main>;
+  return <main className="admin-page"><div className="admin-page-head"><div><h1>Booking History</h1><p>Showing Ride Aura booking requests from the last 6 months only.</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="admin-table-wrap"><table className="table"><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Car</th><th>Pickup</th><th>Return</th><th>Location</th><th>License</th><th>Status</th></tr></thead><tbody>{bookings.map(b=><tr key={b.id}><td>{b.id.slice(0,8)}</td><td>{b.customer_name}</td><td><a href={`tel:${b.phone}`}>{b.phone}</a></td><td>{b.car_id || '-'}</td><td>{b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</td><td>{b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</td><td>{b.location || '-'}</td><td>{b.license_path ? <button type="button" onClick={()=>getLicenseUrl(b.license_path)}>View</button> : '-'}</td><td><select value={b.status || 'Pending'} onChange={(e)=>updateStatus(b.id, e.target.value)}>{statuses.map(status=><option key={status}>{status}</option>)}</select></td></tr>)}{bookings.length === 0 && <tr><td colSpan={9}>No booking history in the last 6 months.</td></tr>}</tbody></table></div></main>;
 }
