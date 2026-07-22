@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { type Car } from '@/lib/data';
 import { hasSupabase, supabase } from '@/lib/supabase';
 import './booking.css';
@@ -77,6 +77,7 @@ function buildBookingEmailLink(subject: string, body: string) {
 }
 
 export default function Booking() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [cars, setCars] = useState<Car[]>([]);
   const [selectedCarId, setSelectedCarId] = useState('');
   const [checkedCarId, setCheckedCarId] = useState('');
@@ -117,6 +118,14 @@ export default function Booking() {
 
     loadCars();
   }, []);
+
+  function chooseCarForBooking(car: Car) {
+    setSelectedCarId(car.id);
+    setCheckedCarId(car.id);
+    setNotifyLinks(null);
+    setMessage(`${car.name} selected for booking. Availability: ${availabilityText(car)}.`);
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -215,21 +224,30 @@ export default function Booking() {
                 </div>
                 <div className="booking-card-actions">
                   <button
-                    className="btn dark"
+                    className="btn dark booking-action"
                     type="button"
                     onClick={() => {
-                      setSelectedCarId(car.id);
                       setCheckedCarId(car.id);
                     }}
                   >
-                    Check Availability
+                    Availability
                   </button>
-                  <a className="btn" href={buildWhatsappLink(car)} target="_blank" rel="noopener noreferrer">
+                  <button
+                    className="btn booking-action"
+                    type="button"
+                    onClick={() => chooseCarForBooking(car)}
+                  >
+                    Book This Car
+                  </button>
+                  <a className="btn booking-action booking-whatsapp-action" href={buildWhatsappLink(car)} target="_blank" rel="noopener noreferrer">
                     WhatsApp Query
                   </a>
                 </div>
               </article>
             ))}
+            {!loadingCars && cars.length === 0 && (
+              <div className="panel">No cars added yet. Please add cars from the Ride Aura admin dashboard.</div>
+            )}
           </div>
 
           {checkedCar && (
@@ -242,7 +260,12 @@ export default function Booking() {
           )}
         </section>
 
-        <form className="panel" onSubmit={submit}>
+        <form className="panel booking-form" ref={formRef} onSubmit={submit}>
+          <div className="booking-form-head">
+            <span className="eyebrow">Booking Form</span>
+            <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a car to book'}</h3>
+            {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
+          </div>
           <div className="grid2">
             <div className="field">
               <label>Name</label>
@@ -262,7 +285,8 @@ export default function Booking() {
             </div>
             <div className="field">
               <label>Selected Car</label>
-              <select name="car_id" value={selectedCarId} onChange={(e) => setSelectedCarId(e.target.value)}>
+              <select name="car_id" value={selectedCarId} onChange={(e) => setSelectedCarId(e.target.value)} required>
+                {!selectedCarId && <option value="">Select Car</option>}
                 {cars.map((car) => (
                   <option key={car.id} value={car.id}>
                     {car.name} - {availabilityText(car)}

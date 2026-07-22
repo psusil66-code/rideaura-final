@@ -88,8 +88,40 @@
 .booking-card-actions {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+}
+
+.booking-action {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.booking-whatsapp-action {
+  background: #35d66b;
+  color: #06210f;
+}
+
+.booking-form {
+  scroll-margin-top: 112px;
+}
+
+.booking-form-head {
+  margin-bottom: 18px;
+}
+
+.booking-form-head h3 {
+  margin: 6px 0;
+  color: var(--navy);
+  font-size: 28px;
+}
+
+.booking-form-head p {
+  margin: 0;
+  color: #526173;
+  font-weight: 800;
 }
 
 .availability-result {
