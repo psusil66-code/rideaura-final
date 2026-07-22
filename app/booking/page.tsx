@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { sampleCars, type Car } from '@/lib/data';
+import { type Car } from '@/lib/data';
 import { hasSupabase, supabase } from '@/lib/supabase';
 import './booking.css';
 
@@ -77,8 +77,8 @@ function buildBookingEmailLink(subject: string, body: string) {
 }
 
 export default function Booking() {
-  const [cars, setCars] = useState<Car[]>(sampleCars);
-  const [selectedCarId, setSelectedCarId] = useState(sampleCars[0]?.id || '');
+  const [cars, setCars] = useState<Car[]>([]);
+  const [selectedCarId, setSelectedCarId] = useState('');
   const [checkedCarId, setCheckedCarId] = useState('');
   const [message, setMessage] = useState('');
   const [notifyLinks, setNotifyLinks] = useState<{ whatsapp: string; email: string } | null>(null);

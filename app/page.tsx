@@ -1,15 +1,12 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { type Car } from '@/lib/data';
+import { hasSupabase, supabase } from '@/lib/supabase';
+
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650';
 const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL || 'https://wa.me/message/4G6UESYCXY2BD1';
 const officeLocation = 'Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta, Bhubaneswar, Odisha - 751003';
-
-const lineup = [
-  {name:'Renault Kwid', seats:5, type:'Hatchback', fuel:'Petrol', transmission:'Manual', status:'Available', h12:800, h24:1200, img:'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80'},
-  {name:'Maruti Swift', seats:5, type:'Hatchback', fuel:'Petrol', transmission:'Manual', status:'Available', h12:1300, h24:1800, img:'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=80'},
-  {name:'Honda City', seats:5, type:'Sedan', fuel:'Petrol', transmission:'Automatic', status:'Available', h12:1800, h24:2500, img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'},
-  {name:'Tata Nexon', seats:5, type:'SUV', fuel:'Diesel', transmission:'Manual', status:'Available', h12:1800, h24:2500, img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80'},
-  {name:'Mahindra Thar', seats:4, type:'SUV', fuel:'Diesel', transmission:'Manual', status:'Available', h12:2800, h24:3700, img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80'},
-  {name:'Kia Carens', seats:7, type:'MPV', fuel:'Petrol', transmission:'Automatic', status:'Available', h12:1900, h24:2800, img:'https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=900&q=80'}
-];
 
 const faqs = [
   {
@@ -67,6 +64,28 @@ const faqs = [
 ];
 
 export default function Home(){
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loadingCars, setLoadingCars] = useState(true);
+
+  useEffect(() => {
+    async function loadCars() {
+      if (!hasSupabase || !supabase) {
+        setLoadingCars(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) setCars(data as Car[]);
+      setLoadingCars(false);
+    }
+
+    loadCars();
+  }, []);
+
   return <main>
     <section className="hero odisha-hero">
       <div className="hero-ornament left" aria-hidden="true"></div>
@@ -107,7 +126,7 @@ export default function Home(){
       </div>
     </section>
 
-    <section className="section" id="fleet"><div className="container"><div className="title"><span className="eyebrow">Our Fleet</span><h2>Choose the car that fits your journey</h2><p>Clean, reliable options for city drives, family trips, business travel and Odisha adventures.</p></div><div className="grid3">{lineup.map(car=><article className="card fleet-card" key={car.name}><img src={car.img} alt={car.name}/><div className="card-body"><h3>{car.name}</h3><div className="meta"><span>{car.seats} Seats</span><span>{car.fuel}</span><span>{car.transmission}</span><span>{car.status}</span></div><div className="price-row"><div className="price-box"><small>12-Hours</small><div className="price">Rs. {car.h12}</div></div><div className="price-box"><small>24-Hours</small><div className="price">Rs. {car.h24}</div></div></div><a className="btn" href="/booking" style={{width:'100%'}}>Check Availability</a></div></article>)}</div></div></section>
+    <section className="section" id="fleet"><div className="container"><div className="title"><span className="eyebrow">Our Fleet</span><h2>Choose the car that fits your journey</h2><p>Only cars added from the Ride Aura admin dashboard are shown here.</p></div>{loadingCars ? <div className="panel">Loading Ride Aura cars...</div> : <div className="grid3">{cars.map(car=><article className="card fleet-card" key={car.id}>{car.image_url ? <img src={car.image_url} alt={car.name}/> : <div className="booking-car-empty">No Image</div>}<div className="card-body"><h3>{car.name}</h3><div className="meta"><span>{car.seats} Seats</span><span>{car.fuel_type}</span><span>{car.transmission}</span><span>{car.status}</span></div><div className="price-row"><div className="price-box"><small>Per Day</small><div className="price">Rs. {car.price_per_day}</div></div><div className="price-box"><small>Per Hour</small><div className="price">Rs. {car.price_per_hour}</div></div></div><a className="btn" href="/booking" style={{width:'100%'}}>Check Availability</a></div></article>)}{cars.length === 0 && <div className="panel">No cars added yet. Add cars from the admin dashboard to show them here.</div>}</div>}</div></section>
     <section className="section band heritage-band" id="why"><div className="konark-mark" aria-hidden="true"></div><div className="container"><div className="title"><span className="eyebrow">Why Choose Ride Aura Self Drive?</span><h2>Premium freedom with Odisha-rooted service</h2><p>Your Ride. Your Route. Your Freedom.</p></div><div className="grid6"><div className="benefit-card"><b>01</b><h3>Well Maintained Cars</h3><p>Clean and reliable vehicles prepared for confident self-drive journeys.</p></div><div className="benefit-card"><b>02</b><h3>Transparent Pricing</h3><p>Clear rental plans with simple communication before you travel.</p></div><div className="benefit-card"><b>03</b><h3>No Driver - 100% Freedom</h3><p>Drive at your pace with your route, schedule and privacy.</p></div><div className="benefit-card"><b>04</b><h3>24/7 Customer Support</h3><p>Helpful support for booking, pickup and journey questions.</p></div><div className="benefit-card"><b>05</b><h3>Easy Booking Process</h3><p>Choose your date, pickup point and car in a clean booking flow.</p></div><div className="benefit-card"><b>06</b><h3>Hassle-Free Experience</h3><p>Airport and railway station pickup support for smooth starts.</p></div></div></div></section>
     <section className="section" id="how"><div className="container"><div className="title"><span className="eyebrow">How It Works</span><h2>From booking to driving in 4 simple steps</h2></div><div className="grid4 steps-grid"><div className="step-card"><span>1</span><h3>Choose Your Car</h3><p>Browse available vehicles and select one that matches your journey.</p></div><div className="step-card"><span>2</span><h3>Select Your Dates</h3><p>Choose pickup and return date/time according to your travel plan.</p></div><div className="step-card"><span>3</span><h3>Complete Verification</h3><p>Submit required documents and complete the simple booking process.</p></div><div className="step-card"><span>4</span><h3>Take the Wheel</h3><p>Collect your vehicle, start the engine and enjoy the freedom.</p></div></div></div></section>
     <section className="section odisha-section"><div className="container odisha-copy"><span className="eyebrow">Explore Odisha Your Way</span><h2>One car. Endless destinations.</h2><p>Drive from Bhubaneswar to Puri, experience the heritage of Konark, explore Chilika, escape to the hills, discover hidden waterfalls, or enjoy a memorable road trip with the people who matter most.</p><a className="btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Plan My Journey</a></div></section>
