@@ -12,6 +12,12 @@ type CarStatus = {
   unavailable_until: string | null;
 };
 
+function threeMonthsAgoIso() {
+  const date = new Date();
+  date.setMonth(date.getMonth() - 3);
+  return date.toISOString();
+}
+
 export default function Admin() {
   const router = useRouter();
   const [cars, setCars] = useState(0);
@@ -37,11 +43,12 @@ export default function Admin() {
         return;
       }
 
+      const historyFrom = threeMonthsAgoIso();
       const [carsResult, carListResult, bookingsResult, pendingResult] = await Promise.all([
         supabase.from('cars').select('id', { count: 'exact', head: true }),
         supabase.from('cars').select('id,name,status,unavailable_until').order('created_at', { ascending: false }),
-        supabase.from('bookings').select('id', { count: 'exact', head: true }),
-        supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'Pending'),
+        supabase.from('bookings').select('id', { count: 'exact', head: true }).gte('created_at', historyFrom),
+        supabase.from('bookings').select('id', { count: 'exact', head: true }).gte('created_at', historyFrom).eq('status', 'Pending'),
       ]);
 
       if (carsResult.error || carListResult.error || bookingsResult.error || pendingResult.error) {
@@ -69,5 +76,5 @@ export default function Admin() {
 
   if (loading) return <main className="admin-page"><p>Loading dashboard...</p></main>;
 
-  return <main className="admin-page"><div className="admin-page-head"><div><h1>Admin Dashboard</h1><p>Manage Ride Aura cars, prices, availability and bookings.</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="grid3"><div className="box admin-stat"><h3>Total Cars</h3><p>{cars}</p><Link href="/admin/cars">Manage cars</Link></div><div className="box admin-stat available-stat"><h3>Available Cars</h3><p>{availableCars}</p><Link href="/admin/cars">Update availability</Link></div><div className="box admin-stat unavailable-stat"><h3>Not Available Cars</h3><p>{unavailableCars}</p><Link href="/admin/cars">Check unavailable list</Link></div><div className="box admin-stat"><h3>Pending Bookings</h3><p>{pending}</p><Link href="/admin/bookings">View bookings</Link></div><div className="box admin-stat"><h3>Total Bookings</h3><p>{bookings}</p><Link href="/booking">Open booking form</Link></div></div><section className="box availability-board"><div className="availability-board-head"><div><h2>Car Availability Highlight</h2><p>Quickly see which cars customers can book now.</p></div><Link className="btn dark" href="/admin/cars">Manage Cars</Link></div><div className="availability-list">{carStatuses.map((car)=><div className="availability-row" key={car.id}><strong>{car.name}</strong><span className={(car.status || 'Available') === 'Available' ? 'admin-available-pill' : 'admin-unavailable-pill'}>{car.status || 'Available'}{(car.status || 'Available') !== 'Available' && car.unavailable_until ? ` until ${new Date(car.unavailable_until).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}` : ''}</span></div>)}{carStatuses.length === 0 && <p>No cars added yet.</p>}</div></section></main>;
+  return <main className="admin-page"><div className="admin-page-head"><div><h1>Admin Dashboard</h1><p>Manage Ride Aura cars, prices, availability and bookings.</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="grid3"><div className="box admin-stat"><h3>Total Cars</h3><p>{cars}</p><Link href="/admin/cars">Manage cars</Link></div><div className="box admin-stat available-stat"><h3>Available Cars</h3><p>{availableCars}</p><Link href="/admin/cars">Update availability</Link></div><div className="box admin-stat unavailable-stat"><h3>Not Available Cars</h3><p>{unavailableCars}</p><Link href="/admin/cars">Check unavailable list</Link></div><div className="box admin-stat"><h3>Pending Bookings</h3><p>{pending}</p><Link href="/admin/bookings">View bookings</Link></div><div className="box admin-stat"><h3>Total Bookings</h3><p>{bookings}</p><Link href="/admin/bookings">View 3-month history</Link></div></div><section className="box availability-board"><div className="availability-board-head"><div><h2>Car Availability Highlight</h2><p>Quickly see which cars customers can book now.</p></div><Link className="btn dark" href="/admin/cars">Manage Cars</Link></div><div className="availability-list">{carStatuses.map((car)=><div className="availability-row" key={car.id}><strong>{car.name}</strong><span className={(car.status || 'Available') === 'Available' ? 'admin-available-pill' : 'admin-unavailable-pill'}>{car.status || 'Available'}{(car.status || 'Available') !== 'Available' && car.unavailable_until ? ` until ${new Date(car.unavailable_until).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}` : ''}</span></div>)}{carStatuses.length === 0 && <p>No cars added yet.</p>}</div></section></main>;
 }
