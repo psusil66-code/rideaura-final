@@ -11,6 +11,61 @@ const lineup = [
   {name:'Kia Carens', seats:7, type:'MPV', fuel:'Petrol', transmission:'Automatic', status:'Available', h12:1900, h24:2800, img:'https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=900&q=80'}
 ];
 
+const faqs = [
+  {
+    question: '1. What documents are required to rent a self-drive car?',
+    answer: 'A valid driving licence, Aadhaar card or another government-issued identity proof, and address verification may be required before vehicle handover. Ride Aura may request additional verification depending on the booking.'
+  },
+  {
+    question: '2. What is the minimum age for booking?',
+    answer: 'The customer should be legally eligible to drive in India and must carry an original valid driving licence during the rental period. Age and document checks are confirmed before handover.'
+  },
+  {
+    question: '3. Is there a security deposit?',
+    answer: 'Yes, a refundable security deposit may apply depending on the selected car, rental duration and verification. Deductions may apply for damage, challans, fuel shortage, late return or policy violations.'
+  },
+  {
+    question: '4. How do I book a car?',
+    answer: 'You can search cars on the website, submit the booking request form, or contact Ride Aura directly on WhatsApp. The team confirms availability, documents, payment and pickup details before final handover.'
+  },
+  {
+    question: '5. Do you provide pickup and drop service?',
+    answer: 'Pickup and drop service is available within Bhubaneswar. Extra charges may apply based on distance and location. Airport and railway station pickup support is available as per booking confirmation.'
+  },
+  {
+    question: '6. Can I drive outside Bhubaneswar?',
+    answer: 'Yes, cars can be used for Odisha trips including Puri, Konark, Chilika and other permitted destinations, subject to booking terms, kilometer limits and route approval where applicable.'
+  },
+  {
+    question: '7. What is included in the rental price?',
+    answer: 'Rental price normally covers vehicle usage for the selected time plan. Fuel, tolls, parking, state permits, traffic fines and extra kilometer or late return charges are generally paid by the customer unless specifically included.'
+  },
+  {
+    question: '8. What is the fuel policy?',
+    answer: 'Fuel is usually the customer responsibility unless a special package says otherwise. The vehicle should be returned as per the fuel level or fuel policy communicated during booking.'
+  },
+  {
+    question: '9. What happens if I return the car late?',
+    answer: 'Late return charges may apply. If you need more time, please contact Ride Aura before the scheduled return time. Extensions depend on vehicle availability and approval.'
+  },
+  {
+    question: '10. What if the car is damaged or there is an accident?',
+    answer: 'Inform Ride Aura immediately. The customer must cooperate with photos, videos, police reporting, insurance documentation and other claim requirements. Charges may apply as per damage, insurance and rental terms.'
+  },
+  {
+    question: '11. Are there driving restrictions?',
+    answer: 'Rash driving, racing, overloading, towing, commercial use, illegal activity, drunk driving and driving by an unauthorized person are not allowed. The customer must follow traffic laws and use the vehicle responsibly.'
+  },
+  {
+    question: '12. What is the cancellation policy?',
+    answer: 'Cancellation and refund depend on how early the booking is cancelled, vehicle allocation and payment terms. Convenience charges or non-refundable charges may be deducted where applicable.'
+  },
+  {
+    question: '13. How can I contact Ride Aura Self Drive?',
+    answer: 'You can call +91 91140 30650, email booking@rideauraselfdrive.co.in, or visit Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta, Bhubaneswar, Odisha - 751003.'
+  }
+];
+
 export default function Home(){
   return <main>
     <section className="hero odisha-hero">
@@ -57,7 +112,7 @@ export default function Home(){
     <section className="section" id="how"><div className="container"><div className="title"><span className="eyebrow">How It Works</span><h2>From booking to driving in 4 simple steps</h2></div><div className="grid4 steps-grid"><div className="step-card"><span>1</span><h3>Choose Your Car</h3><p>Browse available vehicles and select one that matches your journey.</p></div><div className="step-card"><span>2</span><h3>Select Your Dates</h3><p>Choose pickup and return date/time according to your travel plan.</p></div><div className="step-card"><span>3</span><h3>Complete Verification</h3><p>Submit required documents and complete the simple booking process.</p></div><div className="step-card"><span>4</span><h3>Take the Wheel</h3><p>Collect your vehicle, start the engine and enjoy the freedom.</p></div></div></div></section>
     <section className="section odisha-section"><div className="container odisha-copy"><span className="eyebrow">Explore Odisha Your Way</span><h2>One car. Endless destinations.</h2><p>Drive from Bhubaneswar to Puri, experience the heritage of Konark, explore Chilika, escape to the hills, discover hidden waterfalls, or enjoy a memorable road trip with the people who matter most.</p><a className="btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Plan My Journey</a></div></section>
     <section className="section"><div className="container"><div className="title"><span className="eyebrow">Customer Reviews</span><h2>Trusted for comfortable self-drive journeys</h2></div><div className="grid3"><div className="review-card"><p>Booking was simple and the car was clean. Good option for Bhubaneswar travel.</p><strong>Verified Customer</strong></div><div className="review-card"><p>Airport pickup support made the journey easy. Clear communication from the team.</p><strong>Business Traveler</strong></div><div className="review-card"><p>Flexible timing and helpful support. Perfect for a weekend Odisha trip.</p><strong>Weekend Traveler</strong></div></div></div></section>
-    <section className="section band" id="faq"><div className="container"><div className="title"><span className="eyebrow">FAQ</span><h2>Frequently Asked Questions</h2></div><div className="faq-list"><details open><summary>What documents are required to rent a car?</summary><p>A valid driving licence and government-issued identity proof are required. Additional verification may be required depending on the booking.</p></details><details><summary>Is there a security deposit?</summary><p>A refundable security deposit may apply depending on the selected vehicle and rental plan.</p></details><details><summary>Do you provide pickup at Bhubaneswar Airport?</summary><p>Yes. Free pickup at Bhubaneswar Airport is available as per booking confirmation and operational availability.</p></details><details><summary>Do you provide pickup at Bhubaneswar Railway Station?</summary><p>Yes. Free pickup at Bhubaneswar Railway Station is available as per the applicable booking process.</p></details><details><summary>Can I travel outside Bhubaneswar?</summary><p>Yes. Cars can be used for travel across Odisha, subject to applicable rental terms and permitted travel area.</p></details></div></div></section>
+    <section className="section band" id="faq"><div className="container"><div className="title"><span className="eyebrow">FAQ</span><h2>Frequently Asked Questions</h2><p>Clear answers for documents, deposits, pickup, fuel, late return, cancellation and safe self-drive usage.</p></div><div className="faq-list">{faqs.map((faq,index)=><details open={index===0} key={faq.question}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}</div></div></section>
     <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noopener noreferrer">WA</a>
   </main>
 }
