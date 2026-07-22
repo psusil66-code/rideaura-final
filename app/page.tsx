@@ -58,8 +58,52 @@ const faqs = [
     answer: 'Cancellation and refund depend on how early the booking is cancelled, vehicle allocation and payment terms. Convenience charges or non-refundable charges may be deducted where applicable.'
   },
   {
-    question: '13. How can I contact Ride Aura Self Drive?',
+    question: '13. How can I contact Ride Aura?',
     answer: 'You can call +91 91140 30650 or +91 63716 00719, email booking@rideauraselfdrive.co.in, or visit Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta, Bhubaneswar, Odisha - 751003.'
+  },
+  {
+    question: '14. Are there kilometre limits?',
+    answer: 'Kilometre limits may depend on the selected rental plan, car category and booking duration. Any extra kilometre charges, if applicable, will be communicated by Ride Aura before confirmation.'
+  },
+  {
+    question: '15. Can I extend my booking?',
+    answer: 'Yes, booking extension can be requested before the scheduled return time. Extension approval depends on car availability, payment confirmation and Ride Aura approval.'
+  },
+  {
+    question: '16. Who can drive the vehicle?',
+    answer: 'Only the renter or a verified authorised driver approved for the booking may drive the vehicle. Sub-letting or allowing an unauthorised person to drive may lead to deposit forfeiture and additional liability.'
+  },
+  {
+    question: '17. Which activities are not allowed?',
+    answer: 'The vehicle must not be used for racing, towing, taxi service, commercial goods carrying, product promotion, illegal activity, drunk driving, drug-influenced driving or any activity prohibited by law or Ride Aura terms.'
+  },
+  {
+    question: '18. Are pets, arms or banned substances allowed?',
+    answer: 'No. Customers are not allowed to carry arms, ammunitions, banned drugs or pets in Ride Aura vehicles. Penalties may apply if prohibited items or misuse are found.'
+  },
+  {
+    question: '19. Are there restricted travel areas?',
+    answer: 'Phulbani, Koraput and Malkangiri belts in Odisha are restricted areas for Ride Aura bookings. A booking for these restricted areas may be treated as cancelled.'
+  },
+  {
+    question: '20. Who pays traffic fines or challans?',
+    answer: 'The customer is responsible for traffic fines, parking fines, toll violations, e-challans and penalties during the rental period. Ride Aura may recover such amounts even if the challan is received later.'
+  },
+  {
+    question: '21. Is smoking or drinking allowed inside the car?',
+    answer: 'No. Smoking, drinking and drugs are not allowed inside Ride Aura cars. Cleaning charges or penalties may apply if smell, stains, prohibited items or related evidence are found.'
+  },
+  {
+    question: '22. What should I check before taking delivery?',
+    answer: 'Customers should check the car condition, fuel level, documents, photos/videos, accessories and existing damage before handover. Any concern should be reported to Ride Aura immediately.'
+  },
+  {
+    question: '23. What happens if I miss pickup time?',
+    answer: 'If the customer does not collect the vehicle within the permitted pickup window and does not inform Ride Aura, the booking may be treated as a no-show and applicable charges may apply.'
+  },
+  {
+    question: '24. Can Ride Aura cancel or change a booking?',
+    answer: 'Ride Aura may offer an alternate vehicle or cancel/refund where a car becomes unavailable due to breakdown, maintenance, accident, documentation issue, safety concern or unavoidable operational reason.'
   }
 ];
 
