@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     question: '13. How can I contact Ride Aura Self Drive?',
-    answer: 'You can call +91 91140 30650, email booking@rideauraselfdrive.co.in, or visit Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta, Bhubaneswar, Odisha - 751003.'
+    answer: 'You can call +91 91140 30650 or +91 63716 00719, email booking@rideauraselfdrive.co.in, or visit Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta, Bhubaneswar, Odisha - 751003.'
   }
 ];
 
