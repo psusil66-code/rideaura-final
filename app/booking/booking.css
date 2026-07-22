@@ -1,7 +1,11 @@
+.booking-page {
+  padding-top: 150px;
+}
+
 .booking-title {
   max-width: 100%;
   margin-bottom: 28px;
-  padding: 30px 24px;
+  padding: 34px 24px 30px;
   border-radius: 16px;
   background:
     linear-gradient(110deg, rgba(7, 22, 45, .96), rgba(8, 41, 82, .9)),
@@ -12,6 +16,8 @@
 
 .booking-title h2 {
   color: #fff;
+  margin-top: 0;
+  line-height: 1.25;
   text-shadow: 0 2px 14px rgba(0, 0, 0, .35);
 }
 
@@ -193,6 +199,10 @@
 }
 
 @media (max-width: 520px) {
+  .booking-page {
+    padding-top: 128px;
+  }
+
   .booking-title {
     padding: 24px 16px;
   }

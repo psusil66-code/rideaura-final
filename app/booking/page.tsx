@@ -190,7 +190,7 @@ export default function Booking() {
   }
 
   return (
-    <main className="section">
+    <main className="section booking-page">
       <div className="container">
         <div className="title booking-title">
           <h2>Booking Request</h2>
