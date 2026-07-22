@@ -192,7 +192,7 @@ export default function Booking() {
   return (
     <main className="section">
       <div className="container">
-        <div className="title">
+        <div className="title booking-title">
           <h2>Booking Request</h2>
           <p>Check car availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
         </div>
