@@ -254,6 +254,44 @@
   box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
 }
 
+.booking-history-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.booking-history-card div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.booking-history-card strong {
+  color: #06142e;
+  font-size: 20px;
+}
+
+.booking-history-card span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #fff8e7;
+  color: #7a4b00;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.booking-history-card p {
+  margin: 7px 0;
+  color: #31445f;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -529,6 +567,10 @@
 
   .admin-page-head {
     display: grid;
+  }
+
+  .booking-history-cards {
+    grid-template-columns: 1fr;
   }
 
   .admin-login-shell {
