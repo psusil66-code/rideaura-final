@@ -20,6 +20,7 @@ function Header(){
     <div className="container nav">
       <Link className="brand" href="/"><span className="logo"><img src="/rideaura-logo-navbar.png" alt="Ride Aura Self Drive logo"/></span><span className="brand-text">Ride Aura<br/><small>SELF DRIVE</small></span></Link>
       <nav className="links"><Link href="/">Home</Link><Link href="/#fleet">Cars</Link><Link href="/#how">How It Works</Link><Link href="/#why">Destinations</Link><Link href="/about">About Us</Link><Link href="/faq">FAQ</Link><Link href="/contact">Contact</Link><Link href="/admin/login" className="login-link">Admin</Link></nav>
+      <details className="mobile-menu"><summary>Menu</summary><nav><Link href="/">Home</Link><Link href="/#fleet">Cars</Link><Link href="/#how">How It Works</Link><Link href="/#why">Destinations</Link><Link href="/about">About Us</Link><Link href="/faq">FAQ</Link><Link href="/contact">Contact</Link><Link href="/admin/login">Admin</Link></nav></details>
       <a href={whatsappUrl} className="btn nav-book" target="_blank" rel="noopener noreferrer">Book Now</a>
     </div>
   </header>
