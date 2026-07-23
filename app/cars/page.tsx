@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { type Car } from '@/lib/data';
 import { hasSupabase, supabase } from '@/lib/supabase';
+import { isCar } from '@/lib/vehicleFilters';
 
 export default function Cars() {
   const [cars, setCars] = useState<Car[]>([]);
@@ -20,7 +21,7 @@ export default function Cars() {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (!error && data) setCars(data as Car[]);
+      if (!error && data) setCars((data as Car[]).filter(isCar));
       setLoading(false);
     }
 
@@ -31,8 +32,9 @@ export default function Cars() {
     <main className="section">
       <div className="container">
         <div className="title">
-          <h2>Cars & Bikes</h2>
-          <p>Browse cars and bikes added from the Ride Aura admin dashboard.</p>
+          <span className="eyebrow">Ride Aura Cars</span>
+          <h2>Self-Drive Cars</h2>
+          <p>Browse only car rentals added from the Ride Aura admin dashboard.</p>
         </div>
         {loading ? (
           <div className="panel">Loading Ride Aura vehicles...</div>
@@ -52,11 +54,11 @@ export default function Cars() {
                     <span>{car.status}</span>
                   </div>
                   <p>{car.description}</p>
-                  <a className="btn dark" href="/booking">Check Availability</a>
+                  <a className="btn dark" href={`/booking?vehicle=${encodeURIComponent(car.id)}&type=car`}>Check Availability</a>
                 </div>
               </article>
             ))}
-            {cars.length === 0 && <div className="panel">No vehicles added yet. Add cars or bikes from the admin dashboard to show them here.</div>}
+            {cars.length === 0 && <div className="panel">No cars added yet. Add cars from the admin dashboard to show them here.</div>}
           </div>
         )}
       </div>

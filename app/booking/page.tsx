@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { type Car } from '@/lib/data';
 import { hasSupabase, supabase } from '@/lib/supabase';
+import { isBike, isCar } from '@/lib/vehicleFilters';
 import './booking.css';
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650';
@@ -109,9 +110,17 @@ export default function Booking() {
         .order('created_at', { ascending: false });
 
       if (!error && data?.length) {
-        const liveCars = data as Car[];
+        const params = new URLSearchParams(window.location.search);
+        const selectedVehicle = params.get('vehicle') || '';
+        const type = params.get('type') || '';
+        const allVehicles = data as Car[];
+        const liveCars = type === 'bike'
+          ? allVehicles.filter(isBike)
+          : type === 'car'
+            ? allVehicles.filter(isCar)
+            : allVehicles;
         setCars(liveCars);
-        setSelectedCarId(liveCars[0].id);
+        setSelectedCarId(liveCars.find((car) => car.id === selectedVehicle)?.id || liveCars[0]?.id || '');
       }
 
       setLoadingCars(false);
@@ -202,7 +211,7 @@ export default function Booking() {
       <div className="container">
         <div className="title booking-title">
           <h2>Booking Request</h2>
-          <p>Check car or bike availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
+          <p>Check availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
           <p className="booking-minimum-note">Minimum booking duration: {minimumBookingHours} hours.</p>
         </div>
 
@@ -210,7 +219,8 @@ export default function Booking() {
           <div className="booking-availability-head">
             <div>
               <span className="eyebrow">Check Availability</span>
-              <h3>All Cars & Bikes For Booking</h3>
+              <h3>Available Rental Options</h3>
+              <p><a href="/cars">View Car Page</a> | <a href="/bikes">View Bike Page</a></p>
             </div>
             {loadingCars && <p>Loading cars...</p>}
           </div>
@@ -246,7 +256,7 @@ export default function Booking() {
                     type="button"
                     onClick={() => chooseCarForBooking(car)}
                   >
-                    Book This Car
+                    Book This Vehicle
                   </button>
                   <a className="btn booking-action booking-whatsapp-action" href={buildWhatsappLink(car)} target="_blank" rel="noopener noreferrer">
                     WhatsApp Query
@@ -263,7 +273,7 @@ export default function Booking() {
             <div className="availability-result">
               <strong>{checkedCar.name}</strong> is currently <b>{availabilityText(checkedCar)}</b>.
               <a href={buildWhatsappLink(checkedCar)} target="_blank" rel="noopener noreferrer">
-                Send this car query on WhatsApp
+                Send this vehicle query on WhatsApp
               </a>
             </div>
           )}

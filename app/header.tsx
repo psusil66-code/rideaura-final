@@ -25,7 +25,8 @@ export default function Header() {
         </Link>
         <nav className="links">
           <Link href="/">Home</Link>
-          <Link href="/#fleet">Cars & Bikes</Link>
+          <Link href="/cars">Cars</Link>
+          <Link href="/bikes">Bike Rent</Link>
           <Link href="/#how">How It Works</Link>
           <Link href="/#why">Destinations</Link>
           <Link href="/about">About Us</Link>
@@ -40,7 +41,8 @@ export default function Header() {
           {menuOpen && (
             <nav>
               <Link href="/" onClick={closeMenu}>Home</Link>
-              <Link href="/#fleet" onClick={closeMenu}>Cars & Bikes</Link>
+              <Link href="/cars" onClick={closeMenu}>Cars</Link>
+              <Link href="/bikes" onClick={closeMenu}>Bike Rent</Link>
               <Link href="/#how" onClick={closeMenu}>How It Works</Link>
               <Link href="/#why" onClick={closeMenu}>Destinations</Link>
               <Link href="/about" onClick={closeMenu}>About Us</Link>
