@@ -1,6 +1,6 @@
 const faqs = [
   {
-    question: '1. What documents are required to rent a self-drive car?',
+    question: '1. What documents are required to rent a self-drive car or bike?',
     answer: 'A valid driving licence, Aadhaar card or another government-issued identity proof, and address verification may be required before vehicle handover. Ride Aura may request additional verification depending on the booking.'
   },
   {
@@ -12,8 +12,8 @@ const faqs = [
     answer: 'Yes, a refundable security deposit may apply depending on the selected car, rental duration and verification. Deductions may apply for damage, challans, fuel shortage, late return or policy violations.'
   },
   {
-    question: '4. How do I book a car?',
-    answer: 'You can search cars on the website, submit the booking request form, or contact Ride Aura directly on WhatsApp. The team confirms availability, documents, payment and pickup details before final handover.'
+    question: '4. How do I book a car or bike?',
+    answer: 'You can search vehicles on the website, submit the booking request form, or contact Ride Aura directly on WhatsApp. The team confirms availability, documents, payment and pickup details before final handover.'
   },
   {
     question: '5. Do you provide pickup and drop service?',
@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     question: '6. Can I drive outside Bhubaneswar?',
-    answer: 'Yes, cars can be used for Odisha trips including Puri, Konark, Chilika and other permitted destinations, subject to booking terms, kilometer limits and route approval where applicable.'
+    answer: 'Yes, cars and bikes can be used for Odisha trips including Puri, Konark, Chilika and other permitted destinations, subject to booking terms, kilometer limits and route approval where applicable.'
   },
   {
     question: '7. What is included in the rental price?',
@@ -80,8 +80,8 @@ const faqs = [
     answer: 'The customer is responsible for traffic fines, parking fines, toll violations, e-challans and penalties during the rental period. Ride Aura may recover such amounts even if the challan is received later.'
   },
   {
-    question: '21. Is smoking or drinking allowed inside the car?',
-    answer: 'No. Smoking, drinking and drugs are not allowed inside Ride Aura cars. Cleaning charges or penalties may apply if smell, stains, prohibited items or related evidence are found.'
+    question: '21. Is smoking or drinking allowed inside the vehicle?',
+    answer: 'No. Smoking, drinking and drugs are not allowed inside Ride Aura vehicles. Cleaning charges or penalties may apply if smell, stains, prohibited items or related evidence are found.'
   },
   {
     question: '22. What should I check before taking delivery?',
@@ -104,7 +104,7 @@ export default function FaqPage() {
         <div className="container">
           <span className="eyebrow">Ride Aura FAQ</span>
           <h1>Frequently Asked Questions</h1>
-          <p>Everything customers should know before booking a Ride Aura self-drive car in Bhubaneswar and across Odisha.</p>
+          <p>Everything customers should know before booking a Ride Aura self-drive car or bike in Bhubaneswar and across Odisha.</p>
         </div>
       </section>
       <section className="section band">

@@ -39,7 +39,7 @@ export default function Login() {
           <span className="admin-kicker">Ride Aura Self Drive</span>
           <h1>Admin Control Center</h1>
           <p>
-            Securely manage cars, prices, availability, customer booking
+            Securely manage cars, bikes, prices, availability, customer booking
             requests and Ride Aura operations from one dashboard.
           </p>
           <div className="admin-login-points">

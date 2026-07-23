@@ -23,8 +23,8 @@ function availabilityText(car: Car) {
 
 function buildWhatsappLink(car: Car) {
   const text = [
-    'Hi Ride Aura, I want to check car availability.',
-    `Car: ${car.name}`,
+    'Hi Ride Aura, I want to check vehicle availability.',
+    `Vehicle: ${car.name}`,
     `Status shown: ${availabilityText(car)}`,
     `Price: Rs. ${car.price_per_day}/day, Rs. ${car.price_per_hour}/hour`,
     `Pickup location: ${officeLocation}`,
@@ -59,7 +59,7 @@ function buildBookingMessage(details: {
     'New Ride Aura booking request',
     `Customer: ${details.customerName}`,
     `Phone: ${details.phone}`,
-    `Car: ${details.carName}`,
+    `Vehicle: ${details.carName}`,
     `Pickup: ${formatDateTime(details.pickupAt)}`,
     `Return: ${formatDateTime(details.returnAt)}`,
     `Pickup location: ${details.location}`,
@@ -162,7 +162,7 @@ export default function Booking() {
       pickupAt,
       returnAt,
       location,
-      carName,
+        carName,
       licensePath
     });
 
@@ -194,14 +194,14 @@ export default function Booking() {
       <div className="container">
         <div className="title booking-title">
           <h2>Booking Request</h2>
-          <p>Check car availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
+          <p>Check car or bike availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
         </div>
 
         <section className="panel booking-availability">
           <div className="booking-availability-head">
             <div>
               <span className="eyebrow">Check Availability</span>
-              <h3>All Cars For Booking</h3>
+              <h3>All Cars & Bikes For Booking</h3>
             </div>
             {loadingCars && <p>Loading cars...</p>}
           </div>
@@ -263,7 +263,7 @@ export default function Booking() {
         <form className="panel booking-form" ref={formRef} onSubmit={submit}>
           <div className="booking-form-head">
             <span className="eyebrow">Booking Form</span>
-            <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a car to book'}</h3>
+            <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
           </div>
           <div className="grid2">
@@ -284,9 +284,9 @@ export default function Booking() {
               <input type="datetime-local" name="return_at" required />
             </div>
             <div className="field">
-              <label>Selected Car</label>
+              <label>Selected Vehicle</label>
               <select name="car_id" value={selectedCarId} onChange={(e) => setSelectedCarId(e.target.value)} required>
-                {!selectedCarId && <option value="">Select Car</option>}
+                {!selectedCarId && <option value="">Select Vehicle</option>}
                 {cars.map((car) => (
                   <option key={car.id} value={car.id}>
                     {car.name} - {availabilityText(car)}

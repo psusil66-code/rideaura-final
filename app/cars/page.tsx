@@ -31,11 +31,11 @@ export default function Cars() {
     <main className="section">
       <div className="container">
         <div className="title">
-          <h2>Cars</h2>
-          <p>Browse cars added from the Ride Aura admin dashboard.</p>
+          <h2>Cars & Bikes</h2>
+          <p>Browse cars and bikes added from the Ride Aura admin dashboard.</p>
         </div>
         {loading ? (
-          <div className="panel">Loading Ride Aura cars...</div>
+          <div className="panel">Loading Ride Aura vehicles...</div>
         ) : (
           <div className="grid3">
             {cars.map((car) => (
@@ -56,7 +56,7 @@ export default function Cars() {
                 </div>
               </article>
             ))}
-            {cars.length === 0 && <div className="panel">No cars added yet. Add cars from the admin dashboard to show them here.</div>}
+            {cars.length === 0 && <div className="panel">No vehicles added yet. Add cars or bikes from the admin dashboard to show them here.</div>}
           </div>
         )}
       </div>
