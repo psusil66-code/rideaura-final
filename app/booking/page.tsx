@@ -8,6 +8,7 @@ import './booking.css';
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650';
 const businessEmail = 'booking@rideauraselfdrive.co.in';
 const officeLocation = 'Saubhagya Nagar, Delta';
+const minimumBookingHours = 12;
 
 function availabilityText(car: Car) {
   if (car.status === 'Not Available' && car.unavailable_until) {
@@ -136,8 +137,15 @@ export default function Booking() {
     const returnAt = String(form.get('return_at') || '');
     const location = String(form.get('location') || '');
     const carName = selectedCar?.name || String(form.get('car_id') || '');
+    const durationHours = (new Date(returnAt).getTime() - new Date(pickupAt).getTime()) / (1000 * 60 * 60);
     let licensePath = '';
     const file = form.get('license') as File;
+
+    if (!Number.isFinite(durationHours) || durationHours < minimumBookingHours) {
+      setNotifyLinks(null);
+      setMessage(`Minimum booking duration is ${minimumBookingHours} hours. Please select a later return date/time.`);
+      return;
+    }
 
     if (hasSupabase && file && file.size) {
       const path = `licenses/${Date.now()}-${file.name}`;
@@ -195,6 +203,7 @@ export default function Booking() {
         <div className="title booking-title">
           <h2>Booking Request</h2>
           <p>Check car or bike availability, send a quick WhatsApp inquiry, or submit a booking request.</p>
+          <p className="booking-minimum-note">Minimum booking duration: {minimumBookingHours} hours.</p>
         </div>
 
         <section className="panel booking-availability">
@@ -265,6 +274,7 @@ export default function Booking() {
             <span className="eyebrow">Booking Form</span>
             <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
+            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>.</p>
           </div>
           <div className="grid2">
             <div className="field">

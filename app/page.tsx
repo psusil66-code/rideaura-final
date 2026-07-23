@@ -38,6 +38,10 @@ const faqs = [
     answer: 'Rental price normally covers vehicle usage for the selected time plan. Fuel, tolls, parking, state permits, traffic fines and extra kilometer or late return charges are generally paid by the customer unless specifically included.'
   },
   {
+    question: '7A. What is the minimum booking duration?',
+    answer: 'The minimum booking duration for Ride Aura cars and bikes is 12 hours. Customers should select pickup and return timing accordingly before submitting a booking request.'
+  },
+  {
     question: '8. What is the fuel policy?',
     answer: 'Fuel is usually the customer responsibility unless a special package says otherwise. The vehicle should be returned as per the fuel level or fuel policy communicated during booking.'
   },

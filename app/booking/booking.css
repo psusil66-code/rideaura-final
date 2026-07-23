@@ -32,6 +32,12 @@
   font-weight: 800;
 }
 
+.booking-title .booking-minimum-note {
+  margin-top: 10px;
+  color: #ffe6a8;
+  font-size: 16px;
+}
+
 .booking-availability {
   margin-bottom: 24px;
 }
