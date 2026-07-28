@@ -220,7 +220,7 @@ export default function HandoverFormPage() {
           .handover-actions{display:none!important}
           .handover-page{padding:0;background:#fff}
           .handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}
-          .handover-watermark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+          .handover-watermark{position:fixed;inset:0;display:grid!important;place-items:center;print-color-adjust:exact;-webkit-print-color-adjust:exact}
           .handover-watermark img{width:520px;opacity:.12}
           .handover-watermark strong{font-size:82px;opacity:.07}
           .handover-head{display:flex;border-bottom:2px solid #07162d;padding-bottom:6px;margin-bottom:8px;gap:12px}
