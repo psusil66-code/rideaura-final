@@ -10,6 +10,8 @@ const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650'
 const businessEmail = 'booking@rideauraselfdrive.co.in';
 const officeLocation = 'Saubhagya Nagar, Delta';
 const minimumBookingHours = 12;
+const maxDocumentBytes = 1024 * 1024;
+const maxDocumentLabel = '1 MB';
 
 function availabilityText(car: Car) {
   if (car.status === 'Not Available' && car.unavailable_until) {
@@ -56,6 +58,7 @@ function buildBookingMessage(details: {
   location: string;
   carName: string;
   licensePath: string;
+  aadhaarPath: string;
 }) {
   return [
     'New Ride Aura booking request',
@@ -66,8 +69,33 @@ function buildBookingMessage(details: {
     `Return: ${formatDateTime(details.returnAt)}`,
     `Pickup location: ${details.location}`,
     details.licensePath ? `License uploaded: ${details.licensePath}` : 'License uploaded: No',
+    details.aadhaarPath ? `Aadhaar uploaded: ${details.aadhaarPath}` : 'Aadhaar uploaded: No',
     'Please confirm availability and booking.'
   ].join('\n');
+}
+
+function isValidUpload(file: FormDataEntryValue | null): file is File {
+  return file instanceof File && file.size > 0;
+}
+
+function validateDocument(file: FormDataEntryValue | null, label: string) {
+  if (!isValidUpload(file)) {
+    return `${label} upload is mandatory.`;
+  }
+
+  if (file.size > maxDocumentBytes) {
+    return `${label} must be ${maxDocumentLabel} or less. Please compress the file and upload again.`;
+  }
+
+  return '';
+}
+
+function safeFileName(fileName: string) {
+  return fileName.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function encodeDocumentPaths(paths: { licensePath: string; aadhaarPath: string }) {
+  return JSON.stringify(paths);
 }
 
 function buildBookingWhatsappLink(message: string) {
@@ -148,7 +176,9 @@ export default function Booking() {
     const carName = selectedCar?.name || String(form.get('car_id') || '');
     const durationHours = (new Date(returnAt).getTime() - new Date(pickupAt).getTime()) / (1000 * 60 * 60);
     let licensePath = '';
-    const file = form.get('license') as File;
+    let aadhaarPath = '';
+    const licenseFile = form.get('license');
+    const aadhaarFile = form.get('aadhaar');
 
     if (!Number.isFinite(durationHours) || durationHours < minimumBookingHours) {
       setNotifyLinks(null);
@@ -156,10 +186,33 @@ export default function Booking() {
       return;
     }
 
-    if (hasSupabase && file && file.size) {
-      const path = `licenses/${Date.now()}-${file.name}`;
-      const upload = await supabase!.storage.from('licenses').upload(path, file);
-      if (!upload.error) licensePath = path;
+    const documentError = validateDocument(licenseFile, 'Driving License') || validateDocument(aadhaarFile, 'Aadhaar');
+    if (documentError) {
+      setNotifyLinks(null);
+      setMessage(documentError);
+      return;
+    }
+
+    const validLicenseFile = licenseFile as File;
+    const validAadhaarFile = aadhaarFile as File;
+
+    if (hasSupabase) {
+      const timestamp = Date.now();
+      licensePath = `documents/${timestamp}-driving-license-${safeFileName(validLicenseFile.name)}`;
+      aadhaarPath = `documents/${timestamp}-aadhaar-${safeFileName(validAadhaarFile.name)}`;
+      const licenseUpload = await supabase!.storage.from('licenses').upload(licensePath, validLicenseFile);
+      if (licenseUpload.error) {
+        setNotifyLinks(null);
+        setMessage(licenseUpload.error.message);
+        return;
+      }
+
+      const aadhaarUpload = await supabase!.storage.from('licenses').upload(aadhaarPath, validAadhaarFile);
+      if (aadhaarUpload.error) {
+        setNotifyLinks(null);
+        setMessage(aadhaarUpload.error.message);
+        return;
+      }
     }
 
     const payload = {
@@ -169,7 +222,7 @@ export default function Booking() {
       return_at: returnAt,
       car_id: carName,
       location,
-      license_path: licensePath,
+      license_path: encodeDocumentPaths({ licensePath, aadhaarPath }),
       status: 'Pending'
     };
 
@@ -179,8 +232,9 @@ export default function Booking() {
       pickupAt,
       returnAt,
       location,
-        carName,
-      licensePath
+      carName,
+      licensePath,
+      aadhaarPath
     });
 
     const links = {
@@ -284,7 +338,7 @@ export default function Booking() {
             <span className="eyebrow">Booking Form</span>
             <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
-            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>.</p>
+            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each.</p>
           </div>
           <div className="grid2">
             <div className="field">
@@ -319,8 +373,12 @@ export default function Booking() {
               <input name="location" defaultValue={officeLocation} required />
             </div>
             <div className="field">
-              <label>Driving License Upload</label>
-              <input type="file" name="license" accept="image/*,.pdf" />
+              <label>Driving License Upload - Max {maxDocumentLabel}</label>
+              <input type="file" name="license" accept="image/*,.pdf" required />
+            </div>
+            <div className="field">
+              <label>Aadhaar Upload - Max {maxDocumentLabel}</label>
+              <input type="file" name="aadhaar" accept="image/*,.pdf" required />
             </div>
           </div>
 
