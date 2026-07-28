@@ -199,39 +199,20 @@ export default function Booking() {
       return;
     }
 
-    const documentError = validateDocument(licenseFile, 'Driving License')
-      || validateDocument(aadhaarFile, 'Aadhaar')
-      || (isNriCustomer ? validateDocument(passportFile, 'Passport') : '')
-      || (isNriCustomer ? validateDocument(internationalLicenseFile, 'International Driving License') : '');
+    const documentError = isNriCustomer
+      ? validateDocument(passportFile, 'Passport') || validateDocument(internationalLicenseFile, 'International Driving License')
+      : validateDocument(licenseFile, 'Driving License') || validateDocument(aadhaarFile, 'Aadhaar Card');
     if (documentError) {
       setNotifyLinks(null);
       setMessage(documentError);
       return;
     }
 
-    const validLicenseFile = licenseFile as File;
-    const validAadhaarFile = aadhaarFile as File;
     const validPassportFile = passportFile as File;
     const validInternationalLicenseFile = internationalLicenseFile as File;
 
     if (hasSupabase) {
       const timestamp = Date.now();
-      licensePath = `documents/${timestamp}-driving-license-${safeFileName(validLicenseFile.name)}`;
-      aadhaarPath = `documents/${timestamp}-aadhaar-${safeFileName(validAadhaarFile.name)}`;
-      const licenseUpload = await supabase!.storage.from('licenses').upload(licensePath, validLicenseFile);
-      if (licenseUpload.error) {
-        setNotifyLinks(null);
-        setMessage(licenseUpload.error.message);
-        return;
-      }
-
-      const aadhaarUpload = await supabase!.storage.from('licenses').upload(aadhaarPath, validAadhaarFile);
-      if (aadhaarUpload.error) {
-        setNotifyLinks(null);
-        setMessage(aadhaarUpload.error.message);
-        return;
-      }
-
       if (isNriCustomer) {
         passportPath = `documents/${timestamp}-passport-${safeFileName(validPassportFile.name)}`;
         const passportUpload = await supabase!.storage.from('licenses').upload(passportPath, validPassportFile);
@@ -246,6 +227,24 @@ export default function Booking() {
         if (internationalLicenseUpload.error) {
           setNotifyLinks(null);
           setMessage(internationalLicenseUpload.error.message);
+          return;
+        }
+      } else {
+        const validLicenseFile = licenseFile as File;
+        const validAadhaarFile = aadhaarFile as File;
+        licensePath = `documents/${timestamp}-driving-license-${safeFileName(validLicenseFile.name)}`;
+        aadhaarPath = `documents/${timestamp}-aadhaar-${safeFileName(validAadhaarFile.name)}`;
+        const licenseUpload = await supabase!.storage.from('licenses').upload(licensePath, validLicenseFile);
+        if (licenseUpload.error) {
+          setNotifyLinks(null);
+          setMessage(licenseUpload.error.message);
+          return;
+        }
+
+        const aadhaarUpload = await supabase!.storage.from('licenses').upload(aadhaarPath, validAadhaarFile);
+        if (aadhaarUpload.error) {
+          setNotifyLinks(null);
+          setMessage(aadhaarUpload.error.message);
           return;
         }
       }
@@ -422,25 +421,29 @@ export default function Booking() {
               <strong>Documents: Max {maxDocumentLabel} each</strong>
               <span>Indian: Driving License + Aadhaar Card. NRI / Foreign: Passport + International Driving License.</span>
             </div>
-            <div className="field">
-              <label className="required-label">Driving License Upload - Max {maxDocumentLabel}</label>
-              <input type="file" name="license" accept="image/*,.pdf" required />
-            </div>
-            <div className="field">
-              <label className="required-label">Aadhaar Card Upload - Max {maxDocumentLabel}</label>
-              <input type="file" name="aadhaar" accept="image/*,.pdf" required />
-            </div>
-            {customerType === 'NRI' && (
-              <div className="field">
-                <label className="required-label">Passport Upload - Max {maxDocumentLabel}</label>
-                <input type="file" name="passport" accept="image/*,.pdf" required />
-              </div>
+            {customerType === 'Indian' && (
+              <>
+                <div className="field">
+                  <label className="required-label">Driving License Upload - Max {maxDocumentLabel}</label>
+                  <input type="file" name="license" accept="image/*,.pdf" required />
+                </div>
+                <div className="field">
+                  <label className="required-label">Aadhaar Card Upload - Max {maxDocumentLabel}</label>
+                  <input type="file" name="aadhaar" accept="image/*,.pdf" required />
+                </div>
+              </>
             )}
             {customerType === 'NRI' && (
-              <div className="field">
-                <label className="required-label">International Driving License - Max {maxDocumentLabel}</label>
-                <input type="file" name="international_license" accept="image/*,.pdf" required />
-              </div>
+              <>
+                <div className="field">
+                  <label className="required-label">Passport Upload - Max {maxDocumentLabel}</label>
+                  <input type="file" name="passport" accept="image/*,.pdf" required />
+                </div>
+                <div className="field">
+                  <label className="required-label">International Driving License - Max {maxDocumentLabel}</label>
+                  <input type="file" name="international_license" accept="image/*,.pdf" required />
+                </div>
+              </>
             )}
           </div>
 
