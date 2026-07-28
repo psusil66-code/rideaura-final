@@ -167,20 +167,21 @@
 .booking-document-notice {
   grid-column: 1 / -1;
   display: grid;
-  gap: 6px;
-  padding: 16px 18px;
-  border: 1px solid rgba(232, 173, 63, .7);
-  border-left: 6px solid #e8ad3f;
-  border-radius: 10px;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid rgba(232, 173, 63, .55);
+  border-left: 4px solid #e8ad3f;
+  border-radius: 8px;
   background: #fff8e7;
   color: #5f3d00;
   font-weight: 800;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .booking-document-notice strong {
   color: #07162d;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .required-label:after {

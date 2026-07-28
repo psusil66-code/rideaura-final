@@ -419,8 +419,8 @@ export default function Booking() {
               <input name="location" defaultValue={officeLocation} required />
             </div>
             <div className="booking-document-notice">
-              <strong>Document upload rule</strong>
-              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar Card are mandatory for all Indian online bookings; Passport and International Driving License are mandatory for NRI / Foreign customers.</span>
+              <strong>Documents: Max {maxDocumentLabel} each</strong>
+              <span>Indian: Driving License + Aadhaar Card. NRI / Foreign: Passport + International Driving License.</span>
             </div>
             <div className="field">
               <label className="required-label">Driving License Upload - Max {maxDocumentLabel}</label>
