@@ -403,6 +403,10 @@ export default function Booking() {
               <label>Pickup Location</label>
               <input name="location" defaultValue={officeLocation} required />
             </div>
+            <div className="booking-document-notice">
+              <strong>Document upload rule</strong>
+              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar are mandatory for all online bookings; Passport is mandatory for NRI / Foreign customers.</span>
+            </div>
             <div className="field">
               <label>Driving License Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="license" accept="image/*,.pdf" required />
