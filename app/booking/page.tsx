@@ -377,7 +377,7 @@ export default function Booking() {
             <span className="eyebrow">Booking Form</span>
             <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
-            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each. NRI customers must also upload Passport and International Driving License.</p>
+            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar Card uploads are mandatory, maximum {maxDocumentLabel} each. NRI customers must also upload Passport and International Driving License.</p>
           </div>
           <div className="grid2">
             <div className="field">
@@ -420,14 +420,14 @@ export default function Booking() {
             </div>
             <div className="booking-document-notice">
               <strong>Document upload rule</strong>
-              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar are mandatory for all online bookings; Passport and International Driving License are mandatory for NRI / Foreign customers.</span>
+              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar Card are mandatory for all Indian online bookings; Passport and International Driving License are mandatory for NRI / Foreign customers.</span>
             </div>
             <div className="field">
               <label className="required-label">Driving License Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="license" accept="image/*,.pdf" required />
             </div>
             <div className="field">
-              <label className="required-label">Aadhaar Upload - Max {maxDocumentLabel}</label>
+              <label className="required-label">Aadhaar Card Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="aadhaar" accept="image/*,.pdf" required />
             </div>
             {customerType === 'NRI' && (
