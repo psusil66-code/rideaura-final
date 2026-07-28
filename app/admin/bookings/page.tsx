@@ -20,6 +20,7 @@ type Booking = {
 const statuses = ['Pending', 'Confirmed', 'Rejected', 'Completed'];
 const bookingColumns = 'id,customer_name,phone,pickup_at,return_at,car_id,location,license_path,status,created_at';
 const basicBookingColumns = 'id,customer_name,phone,pickup_at,return_at,car_id,location,status,created_at';
+const bookingRetentionDays = 181;
 
 function parseDocumentPaths(value: string | null) {
   if (!value) return { licensePath: '', aadhaarPath: '', passportPath: '', internationalLicensePath: '', customerType: '' };
@@ -38,9 +39,9 @@ function parseDocumentPaths(value: string | null) {
   }
 }
 
-function sixMonthsAgoIso() {
+function retentionStartIso() {
   const date = new Date();
-  date.setMonth(date.getMonth() - 6);
+  date.setDate(date.getDate() - bookingRetentionDays);
   return date.toISOString();
 }
 
@@ -52,7 +53,7 @@ export default function Bookings() {
 
   async function loadBookings() {
     if (!supabase) return;
-    const historyFrom = sixMonthsAgoIso();
+    const historyFrom = retentionStartIso();
     const result = await supabase
       .from('bookings')
       .select(bookingColumns)
@@ -126,5 +127,5 @@ export default function Bookings() {
 
   if (loading) return <main className="admin-page"><p>Loading bookings...</p></main>;
 
-  return <main className="admin-page"><div className="admin-page-head"><div><h1>Booking History</h1><p>Showing Ride Aura booking requests from the last 6 months only. Total visible records: {bookings.length}</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="booking-history-cards">{bookings.map(b=>{const docs = parseDocumentPaths(b.license_path);return <article className="box booking-history-card" key={b.id}><div><strong>{b.customer_name || 'Customer'}</strong><span>{b.status || 'Pending'}</span></div><p><b>Customer Type:</b> {docs.customerType || 'Indian'}</p><p><b>Phone:</b> <a href={`tel:${b.phone}`}>{b.phone}</a></p><p><b>Vehicle:</b> {b.car_id || '-'}</p><p><b>Pickup:</b> {b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</p><p><b>Return:</b> {b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</p><p><b>Location:</b> {b.location || '-'}</p></article>})}{bookings.length === 0 && <div className="box"><p>No booking history in the last 6 months.</p></div>}</div><div className="admin-table-wrap"><table className="table"><thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Phone</th><th>Vehicle</th><th>Pickup</th><th>Return</th><th>Location</th><th>Documents</th><th>Status</th></tr></thead><tbody>{bookings.map(b=>{const docs = parseDocumentPaths(b.license_path);return <tr key={b.id}><td>{b.id.slice(0,8)}</td><td>{b.customer_name}</td><td>{docs.customerType || 'Indian'}</td><td><a href={`tel:${b.phone}`}>{b.phone}</a></td><td>{b.car_id || '-'}</td><td>{b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</td><td>{b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</td><td>{b.location || '-'}</td><td>{docs.licensePath ? <button type="button" onClick={()=>getDocumentUrl(docs.licensePath)}>License</button> : '-'} {docs.aadhaarPath ? <button type="button" onClick={()=>getDocumentUrl(docs.aadhaarPath)}>Aadhaar</button> : ''} {docs.passportPath ? <button type="button" onClick={()=>getDocumentUrl(docs.passportPath)}>Passport</button> : ''} {docs.internationalLicensePath ? <button type="button" onClick={()=>getDocumentUrl(docs.internationalLicensePath)}>International License</button> : ''}</td><td><select value={b.status || 'Pending'} onChange={(e)=>updateStatus(b.id, e.target.value)}>{statuses.map(status=><option key={status}>{status}</option>)}</select></td></tr>})}{bookings.length === 0 && <tr><td colSpan={10}>No booking history in the last 6 months.</td></tr>}</tbody></table></div></main>;
+  return <main className="admin-page"><div className="admin-page-head"><div><h1>Booking History</h1><p>Showing Ride Aura booking requests from the last {bookingRetentionDays} days only. Total visible records: {bookings.length}</p></div><button className="btn dark" onClick={signOut}>Logout</button></div>{message && <p className="admin-notice">{message}</p>}<div className="booking-history-cards">{bookings.map(b=>{const docs = parseDocumentPaths(b.license_path);return <article className="box booking-history-card" key={b.id}><div><strong>{b.customer_name || 'Customer'}</strong><span>{b.status || 'Pending'}</span></div><p><b>Customer Type:</b> {docs.customerType || 'Indian'}</p><p><b>Phone:</b> <a href={`tel:${b.phone}`}>{b.phone}</a></p><p><b>Vehicle:</b> {b.car_id || '-'}</p><p><b>Pickup:</b> {b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</p><p><b>Return:</b> {b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</p><p><b>Location:</b> {b.location || '-'}</p></article>})}{bookings.length === 0 && <div className="box"><p>No booking history in the last {bookingRetentionDays} days.</p></div>}</div><div className="admin-table-wrap"><table className="table"><thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Phone</th><th>Vehicle</th><th>Pickup</th><th>Return</th><th>Location</th><th>Documents</th><th>Status</th></tr></thead><tbody>{bookings.map(b=>{const docs = parseDocumentPaths(b.license_path);return <tr key={b.id}><td>{b.id.slice(0,8)}</td><td>{b.customer_name}</td><td>{docs.customerType || 'Indian'}</td><td><a href={`tel:${b.phone}`}>{b.phone}</a></td><td>{b.car_id || '-'}</td><td>{b.pickup_at ? new Date(b.pickup_at).toLocaleString() : '-'}</td><td>{b.return_at ? new Date(b.return_at).toLocaleString() : '-'}</td><td>{b.location || '-'}</td><td>{docs.licensePath ? <button type="button" onClick={()=>getDocumentUrl(docs.licensePath)}>License</button> : '-'} {docs.aadhaarPath ? <button type="button" onClick={()=>getDocumentUrl(docs.aadhaarPath)}>Aadhaar</button> : ''} {docs.passportPath ? <button type="button" onClick={()=>getDocumentUrl(docs.passportPath)}>Passport</button> : ''} {docs.internationalLicensePath ? <button type="button" onClick={()=>getDocumentUrl(docs.internationalLicensePath)}>International License</button> : ''}</td><td><select value={b.status || 'Pending'} onChange={(e)=>updateStatus(b.id, e.target.value)}>{statuses.map(status=><option key={status}>{status}</option>)}</select></td></tr>})}{bookings.length === 0 && <tr><td colSpan={10}>No booking history in the last {bookingRetentionDays} days.</td></tr>}</tbody></table></div></main>;
 }
