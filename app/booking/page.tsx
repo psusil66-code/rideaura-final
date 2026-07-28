@@ -60,6 +60,7 @@ function buildBookingMessage(details: {
   licensePath: string;
   aadhaarPath: string;
   passportPath: string;
+  internationalLicensePath: string;
   customerType: string;
 }) {
   return [
@@ -74,6 +75,7 @@ function buildBookingMessage(details: {
     details.licensePath ? `License uploaded: ${details.licensePath}` : 'License uploaded: No',
     details.aadhaarPath ? `Aadhaar uploaded: ${details.aadhaarPath}` : 'Aadhaar uploaded: No',
     details.passportPath ? `Passport uploaded: ${details.passportPath}` : 'Passport uploaded: No',
+    details.internationalLicensePath ? `International Driving License uploaded: ${details.internationalLicensePath}` : 'International Driving License uploaded: No',
     'Please confirm availability and booking.'
   ].join('\n');
 }
@@ -98,7 +100,7 @@ function safeFileName(fileName: string) {
   return fileName.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function encodeDocumentPaths(paths: { licensePath: string; aadhaarPath: string; passportPath: string; customerType: string }) {
+function encodeDocumentPaths(paths: { licensePath: string; aadhaarPath: string; passportPath: string; internationalLicensePath: string; customerType: string }) {
   return JSON.stringify(paths);
 }
 
@@ -185,9 +187,11 @@ export default function Booking() {
     let licensePath = '';
     let aadhaarPath = '';
     let passportPath = '';
+    let internationalLicensePath = '';
     const licenseFile = form.get('license');
     const aadhaarFile = form.get('aadhaar');
     const passportFile = form.get('passport');
+    const internationalLicenseFile = form.get('international_license');
 
     if (!Number.isFinite(durationHours) || durationHours < minimumBookingHours) {
       setNotifyLinks(null);
@@ -197,7 +201,8 @@ export default function Booking() {
 
     const documentError = validateDocument(licenseFile, 'Driving License')
       || validateDocument(aadhaarFile, 'Aadhaar')
-      || (isNriCustomer ? validateDocument(passportFile, 'Passport') : '');
+      || (isNriCustomer ? validateDocument(passportFile, 'Passport') : '')
+      || (isNriCustomer ? validateDocument(internationalLicenseFile, 'International Driving License') : '');
     if (documentError) {
       setNotifyLinks(null);
       setMessage(documentError);
@@ -207,6 +212,7 @@ export default function Booking() {
     const validLicenseFile = licenseFile as File;
     const validAadhaarFile = aadhaarFile as File;
     const validPassportFile = passportFile as File;
+    const validInternationalLicenseFile = internationalLicenseFile as File;
 
     if (hasSupabase) {
       const timestamp = Date.now();
@@ -234,6 +240,14 @@ export default function Booking() {
           setMessage(passportUpload.error.message);
           return;
         }
+
+        internationalLicensePath = `documents/${timestamp}-international-license-${safeFileName(validInternationalLicenseFile.name)}`;
+        const internationalLicenseUpload = await supabase!.storage.from('licenses').upload(internationalLicensePath, validInternationalLicenseFile);
+        if (internationalLicenseUpload.error) {
+          setNotifyLinks(null);
+          setMessage(internationalLicenseUpload.error.message);
+          return;
+        }
       }
     }
 
@@ -244,7 +258,7 @@ export default function Booking() {
       return_at: returnAt,
       car_id: carName,
       location,
-      license_path: encodeDocumentPaths({ licensePath, aadhaarPath, passportPath, customerType: bookingCustomerType }),
+      license_path: encodeDocumentPaths({ licensePath, aadhaarPath, passportPath, internationalLicensePath, customerType: bookingCustomerType }),
       status: 'Pending'
     };
 
@@ -258,6 +272,7 @@ export default function Booking() {
       licensePath,
       aadhaarPath,
       passportPath,
+      internationalLicensePath,
       customerType: bookingCustomerType
     });
 
@@ -362,7 +377,7 @@ export default function Booking() {
             <span className="eyebrow">Booking Form</span>
             <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
-            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each. NRI customers must also upload Passport.</p>
+            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each. NRI customers must also upload Passport and International Driving License.</p>
           </div>
           <div className="grid2">
             <div className="field">
@@ -405,20 +420,26 @@ export default function Booking() {
             </div>
             <div className="booking-document-notice">
               <strong>Document upload rule</strong>
-              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar are mandatory for all online bookings; Passport is mandatory for NRI / Foreign customers.</span>
+              <span>Each document must be {maxDocumentLabel} or less. Upload clear image or PDF files only. Driving License and Aadhaar are mandatory for all online bookings; Passport and International Driving License are mandatory for NRI / Foreign customers.</span>
             </div>
             <div className="field">
-              <label>Driving License Upload - Max {maxDocumentLabel}</label>
+              <label className="required-label">Driving License Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="license" accept="image/*,.pdf" required />
             </div>
             <div className="field">
-              <label>Aadhaar Upload - Max {maxDocumentLabel}</label>
+              <label className="required-label">Aadhaar Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="aadhaar" accept="image/*,.pdf" required />
             </div>
             {customerType === 'NRI' && (
               <div className="field">
-                <label>Passport Upload - Max {maxDocumentLabel}</label>
+                <label className="required-label">Passport Upload - Max {maxDocumentLabel}</label>
                 <input type="file" name="passport" accept="image/*,.pdf" required />
+              </div>
+            )}
+            {customerType === 'NRI' && (
+              <div className="field">
+                <label className="required-label">International Driving License - Max {maxDocumentLabel}</label>
+                <input type="file" name="international_license" accept="image/*,.pdf" required />
               </div>
             )}
           </div>

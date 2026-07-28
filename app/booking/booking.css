@@ -183,6 +183,12 @@
   font-size: 18px;
 }
 
+.required-label:after {
+  content: " *";
+  color: #dc2626;
+  font-size: 16px;
+}
+
 .availability-result {
   margin-top: 18px;
   border: 1px solid #b7ebc8;
