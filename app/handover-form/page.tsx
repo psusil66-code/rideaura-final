@@ -149,6 +149,13 @@ export default function HandoverFormPage() {
           <div><span>Ride Aura Staff Signature</span></div>
           <div><span>Return Inspection Signature</span></div>
         </div>
+
+        <div className="handover-stamp-row">
+          <div className="handover-stamp-box">
+            <span>Revenue / Postal Stamp</span>
+          </div>
+          <p>Stamp and customer signature to be taken where applicable.</p>
+        </div>
       </section>
 
       <style jsx>{`
@@ -158,7 +165,8 @@ export default function HandoverFormPage() {
         .handover-head{display:flex;justify-content:space-between;gap:24px;align-items:center;border-bottom:3px solid #07162d;padding-bottom:18px;margin-bottom:20px}
         .handover-head h1{margin:0;color:#07162d;font-size:30px}
         .handover-head p{margin:6px 0 0;color:#526173;font-weight:800}
-        .handover-brand img{width:220px;height:70px;object-fit:contain}
+        .handover-brand{background:#06172f;border:1px solid #08cbe8;padding:10px 14px;min-width:260px;display:grid;place-items:center}
+        .handover-brand img{width:230px;height:70px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(8,203,232,.35))}
         .handover-sheet h2{margin:24px 0 12px;color:#07162d;font-size:18px;border-bottom:1px solid #d9e3ef;padding-bottom:7px}
         .handover-grid{display:grid;gap:12px}
         .handover-grid.two{grid-template-columns:repeat(2,1fr)}
@@ -178,8 +186,12 @@ export default function HandoverFormPage() {
         .handover-signatures{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
         .handover-signatures div{height:82px;border-bottom:1px solid #111827;display:flex;align-items:flex-end;justify-content:center}
         .handover-signatures span{font-size:12px;font-weight:900;color:#526173;text-transform:uppercase}
-        @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand img{width:180px}}
-        @media print{.top,.site-footer,.handover-actions,.whatsapp-float{display:none!important}.handover-page{padding:0;background:#fff}.handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}.handover-sheet h2{break-after:avoid}.handover-table tr,.handover-check-grid,.handover-signatures{break-inside:avoid}body{background:#fff}}
+        .handover-stamp-row{display:flex;align-items:flex-end;gap:18px;margin-top:24px}
+        .handover-stamp-box{width:150px;height:112px;border:2px dashed #07162d;background:#f8fafc;display:grid;place-items:center;text-align:center;padding:10px}
+        .handover-stamp-box span{font-size:12px;font-weight:900;color:#07162d;text-transform:uppercase;line-height:1.35}
+        .handover-stamp-row p{margin:0 0 8px;color:#526173;font-size:13px;font-weight:800}
+        @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand{min-width:0}.handover-brand img{width:180px}.handover-stamp-row{display:grid}}
+        @media print{.top,.site-footer,.handover-actions,.whatsapp-float{display:none!important}.handover-page{padding:0;background:#fff}.handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}.handover-brand{background:#06172f!important;border:1px solid #111!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.handover-sheet h2{break-after:avoid}.handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}body{background:#fff}}
       `}</style>
     </main>
   );
