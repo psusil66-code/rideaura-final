@@ -145,16 +145,14 @@ export default function HandoverFormPage() {
         <Line label="Special Notes / Existing Damage Details" wide />
 
         <div className="handover-signatures">
-          <div><span>Customer Signature</span></div>
-          <div><span>Ride Aura Staff Signature</span></div>
-          <div><span>Return Inspection Signature</span></div>
-        </div>
-
-        <div className="handover-stamp-row">
-          <div className="handover-stamp-box">
-            <span>Revenue / Postal Stamp</span>
+          <div className="signature-box customer-signature-box">
+            <div className="handover-stamp-box">
+              <span>Revenue / Postal Stamp</span>
+            </div>
+            <span>Customer Signature</span>
           </div>
-          <p>Stamp and customer signature to be taken where applicable.</p>
+          <div className="signature-box"><span>Ride Aura Staff Signature</span></div>
+          <div className="signature-box"><span>Return Inspection Signature</span></div>
         </div>
       </section>
 
@@ -184,12 +182,10 @@ export default function HandoverFormPage() {
         .handover-table td:nth-child(2){width:60px;text-align:center}
         .handover-terms{margin:0;padding-left:20px;color:#26364a;font-size:13px;line-height:1.55}
         .handover-signatures{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
-        .handover-signatures div{height:82px;border-bottom:1px solid #111827;display:flex;align-items:flex-end;justify-content:center}
+        .signature-box{position:relative;height:82px;border-bottom:1px solid #111827;display:flex;align-items:flex-end;justify-content:center}
         .handover-signatures span{font-size:12px;font-weight:900;color:#526173;text-transform:uppercase}
-        .handover-stamp-row{display:flex;align-items:flex-end;gap:18px;margin-top:24px}
-        .handover-stamp-box{width:150px;height:112px;border:2px dashed #07162d;background:#f8fafc;display:grid;place-items:center;text-align:center;padding:10px}
+        .handover-stamp-box{position:absolute;left:0;bottom:8px;width:82px;height:58px;border:2px dashed #07162d;background:#f8fafc;display:grid;place-items:center;text-align:center;padding:6px}
         .handover-stamp-box span{font-size:12px;font-weight:900;color:#07162d;text-transform:uppercase;line-height:1.35}
-        .handover-stamp-row p{margin:0 0 8px;color:#526173;font-size:13px;font-weight:800}
         @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand{min-width:0}.handover-brand img{width:180px}.handover-stamp-row{display:grid}}
         @media print{
           .handover-actions{display:none!important}
@@ -215,14 +211,12 @@ export default function HandoverFormPage() {
           .handover-table th,.handover-table td{padding:3px 5px}
           .handover-table td:nth-child(2){width:34px}
           .handover-terms{font-size:9px;line-height:1.25;padding-left:14px}
-          .handover-signatures{gap:12px;margin-top:16px}
-          .handover-signatures div{height:44px}
+          .handover-signatures{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px;margin-top:16px}
+          .signature-box{height:54px}
           .handover-signatures span{font-size:8px}
-          .handover-stamp-row{gap:10px;margin-top:12px}
-          .handover-stamp-box{width:92px;height:62px;padding:4px;border-width:1px}
+          .handover-stamp-box{width:58px;height:38px;padding:3px;border-width:1px;bottom:6px}
           .handover-stamp-box span{font-size:8px}
-          .handover-stamp-row p{font-size:9px;margin-bottom:4px}
-          .handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}
+          .handover-table tr,.handover-check-grid,.handover-signatures{break-inside:avoid}
         }
       `}</style>
       <style jsx global>{`
