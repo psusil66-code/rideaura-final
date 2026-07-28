@@ -59,10 +59,13 @@ function buildBookingMessage(details: {
   carName: string;
   licensePath: string;
   aadhaarPath: string;
+  passportPath: string;
+  customerType: string;
 }) {
   return [
     'New Ride Aura booking request',
     `Customer: ${details.customerName}`,
+    `Customer type: ${details.customerType}`,
     `Phone: ${details.phone}`,
     `Vehicle: ${details.carName}`,
     `Pickup: ${formatDateTime(details.pickupAt)}`,
@@ -70,6 +73,7 @@ function buildBookingMessage(details: {
     `Pickup location: ${details.location}`,
     details.licensePath ? `License uploaded: ${details.licensePath}` : 'License uploaded: No',
     details.aadhaarPath ? `Aadhaar uploaded: ${details.aadhaarPath}` : 'Aadhaar uploaded: No',
+    details.passportPath ? `Passport uploaded: ${details.passportPath}` : 'Passport uploaded: No',
     'Please confirm availability and booking.'
   ].join('\n');
 }
@@ -94,7 +98,7 @@ function safeFileName(fileName: string) {
   return fileName.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function encodeDocumentPaths(paths: { licensePath: string; aadhaarPath: string }) {
+function encodeDocumentPaths(paths: { licensePath: string; aadhaarPath: string; passportPath: string; customerType: string }) {
   return JSON.stringify(paths);
 }
 
@@ -114,6 +118,7 @@ export default function Booking() {
   const [message, setMessage] = useState('');
   const [notifyLinks, setNotifyLinks] = useState<{ whatsapp: string; email: string } | null>(null);
   const [loadingCars, setLoadingCars] = useState(true);
+  const [customerType, setCustomerType] = useState('Indian');
 
   const selectedCar = useMemo(
     () => cars.find((car) => car.id === selectedCarId) || cars[0],
@@ -173,12 +178,16 @@ export default function Booking() {
     const pickupAt = String(form.get('pickup_at') || '');
     const returnAt = String(form.get('return_at') || '');
     const location = String(form.get('location') || '');
+    const bookingCustomerType = String(form.get('customer_type') || 'Indian');
+    const isNriCustomer = bookingCustomerType === 'NRI';
     const carName = selectedCar?.name || String(form.get('car_id') || '');
     const durationHours = (new Date(returnAt).getTime() - new Date(pickupAt).getTime()) / (1000 * 60 * 60);
     let licensePath = '';
     let aadhaarPath = '';
+    let passportPath = '';
     const licenseFile = form.get('license');
     const aadhaarFile = form.get('aadhaar');
+    const passportFile = form.get('passport');
 
     if (!Number.isFinite(durationHours) || durationHours < minimumBookingHours) {
       setNotifyLinks(null);
@@ -186,7 +195,9 @@ export default function Booking() {
       return;
     }
 
-    const documentError = validateDocument(licenseFile, 'Driving License') || validateDocument(aadhaarFile, 'Aadhaar');
+    const documentError = validateDocument(licenseFile, 'Driving License')
+      || validateDocument(aadhaarFile, 'Aadhaar')
+      || (isNriCustomer ? validateDocument(passportFile, 'Passport') : '');
     if (documentError) {
       setNotifyLinks(null);
       setMessage(documentError);
@@ -195,6 +206,7 @@ export default function Booking() {
 
     const validLicenseFile = licenseFile as File;
     const validAadhaarFile = aadhaarFile as File;
+    const validPassportFile = passportFile as File;
 
     if (hasSupabase) {
       const timestamp = Date.now();
@@ -213,6 +225,16 @@ export default function Booking() {
         setMessage(aadhaarUpload.error.message);
         return;
       }
+
+      if (isNriCustomer) {
+        passportPath = `documents/${timestamp}-passport-${safeFileName(validPassportFile.name)}`;
+        const passportUpload = await supabase!.storage.from('licenses').upload(passportPath, validPassportFile);
+        if (passportUpload.error) {
+          setNotifyLinks(null);
+          setMessage(passportUpload.error.message);
+          return;
+        }
+      }
     }
 
     const payload = {
@@ -222,7 +244,7 @@ export default function Booking() {
       return_at: returnAt,
       car_id: carName,
       location,
-      license_path: encodeDocumentPaths({ licensePath, aadhaarPath }),
+      license_path: encodeDocumentPaths({ licensePath, aadhaarPath, passportPath, customerType: bookingCustomerType }),
       status: 'Pending'
     };
 
@@ -234,7 +256,9 @@ export default function Booking() {
       location,
       carName,
       licensePath,
-      aadhaarPath
+      aadhaarPath,
+      passportPath,
+      customerType: bookingCustomerType
     });
 
     const links = {
@@ -338,7 +362,7 @@ export default function Booking() {
             <span className="eyebrow">Booking Form</span>
             <h3>{selectedCar ? `Book ${selectedCar.name}` : 'Select a vehicle to book'}</h3>
             {selectedCar && <p>Current status: <b>{availabilityText(selectedCar)}</b></p>}
-            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each.</p>
+            <p>Minimum booking duration is <b>{minimumBookingHours} hours</b>. Driving License and Aadhaar uploads are mandatory, maximum {maxDocumentLabel} each. NRI customers must also upload Passport.</p>
           </div>
           <div className="grid2">
             <div className="field">
@@ -348,6 +372,13 @@ export default function Booking() {
             <div className="field">
               <label>Phone</label>
               <input name="phone" required />
+            </div>
+            <div className="field">
+              <label>Customer Type</label>
+              <select name="customer_type" value={customerType} onChange={(e) => setCustomerType(e.target.value)} required>
+                <option value="Indian">Indian Customer</option>
+                <option value="NRI">NRI / Foreign Customer</option>
+              </select>
             </div>
             <div className="field">
               <label>Pickup Date & Time</label>
@@ -380,6 +411,12 @@ export default function Booking() {
               <label>Aadhaar Upload - Max {maxDocumentLabel}</label>
               <input type="file" name="aadhaar" accept="image/*,.pdf" required />
             </div>
+            {customerType === 'NRI' && (
+              <div className="field">
+                <label>Passport Upload - Max {maxDocumentLabel}</label>
+                <input type="file" name="passport" accept="image/*,.pdf" required />
+              </div>
+            )}
           </div>
 
           <button className="btn dark" type="submit">Submit Booking</button>
