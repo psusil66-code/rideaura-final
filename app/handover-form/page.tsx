@@ -191,10 +191,42 @@ export default function HandoverFormPage() {
         .handover-stamp-box span{font-size:12px;font-weight:900;color:#07162d;text-transform:uppercase;line-height:1.35}
         .handover-stamp-row p{margin:0 0 8px;color:#526173;font-size:13px;font-weight:800}
         @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand{min-width:0}.handover-brand img{width:180px}.handover-stamp-row{display:grid}}
-        @media print{.handover-actions,.handover-brand{display:none!important}.handover-page{padding:0;background:#fff}.handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}.handover-head{display:block;border-bottom:2px solid #07162d;padding-bottom:10px;margin-bottom:14px}.handover-sheet h2{break-after:avoid}.handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}}
+        @media print{
+          .handover-actions{display:none!important}
+          .handover-page{padding:0;background:#fff}
+          .handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}
+          .handover-head{display:flex;border-bottom:2px solid #07162d;padding-bottom:6px;margin-bottom:8px;gap:12px}
+          .handover-head h1{font-size:20px}
+          .handover-head p{font-size:11px;margin-top:2px}
+          .handover-brand{display:grid!important;background:#fff;border:0;padding:0;min-width:150px}
+          .handover-brand img{width:150px;height:44px;filter:none}
+          .handover-sheet h2{font-size:12px;margin:9px 0 5px;padding-bottom:3px;break-after:avoid}
+          .handover-grid{gap:5px 9px}
+          .handover-grid.two{grid-template-columns:repeat(4,1fr)}
+          .handover-grid.three{grid-template-columns:repeat(3,1fr)}
+          .handover-line{gap:2px}
+          .handover-line.wide{margin-top:7px}
+          .handover-line span{font-size:8px}
+          .handover-line input{min-height:20px}
+          .handover-check-grid{grid-template-columns:repeat(4,1fr);gap:4px 8px}
+          .handover-check-grid label{font-size:9px;gap:4px;line-height:1.2}
+          .handover-check-grid input,.handover-table input{width:11px;height:11px;min-height:11px}
+          .handover-table{font-size:9px}
+          .handover-table th,.handover-table td{padding:3px 5px}
+          .handover-table td:nth-child(2){width:34px}
+          .handover-terms{font-size:9px;line-height:1.25;padding-left:14px}
+          .handover-signatures{gap:12px;margin-top:16px}
+          .handover-signatures div{height:44px}
+          .handover-signatures span{font-size:8px}
+          .handover-stamp-row{gap:10px;margin-top:12px}
+          .handover-stamp-box{width:92px;height:62px;padding:4px;border-width:1px}
+          .handover-stamp-box span{font-size:8px}
+          .handover-stamp-row p{font-size:9px;margin-bottom:4px}
+          .handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}
+        }
       `}</style>
       <style jsx global>{`
-        @page{margin:12mm}
+        @page{size:A4;margin:6mm}
         @media print{.top,.site-footer,.whatsapp-float{display:none!important}body{background:#fff!important}}
       `}</style>
     </main>
