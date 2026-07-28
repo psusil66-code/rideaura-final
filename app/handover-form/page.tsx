@@ -212,8 +212,9 @@ export default function HandoverFormPage() {
         .handover-terms{margin:0;padding-left:20px;color:#26364a;font-size:13px;line-height:1.55}
         .handover-signatures{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
         .signature-box{position:relative;height:82px;border-bottom:1px solid #111827;display:flex;align-items:flex-end;justify-content:center}
+        .customer-signature-box{height:118px;justify-content:flex-end;padding-right:20px}
         .handover-signatures span{font-size:12px;font-weight:900;color:#526173;text-transform:uppercase}
-        .handover-stamp-box{position:absolute;left:0;bottom:8px;width:82px;height:58px;border:2px dashed #07162d;background:#f8fafc;display:grid;place-items:center;text-align:center;padding:6px}
+        .handover-stamp-box{position:absolute;left:0;top:10px;width:100px;height:76px;border:2px dashed #07162d;background:#f8fafc;display:grid;place-items:center;text-align:center;padding:6px}
         .handover-stamp-box span{font-size:12px;font-weight:900;color:#07162d;text-transform:uppercase;line-height:1.35}
         @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand{min-width:0}.handover-brand img{width:180px}.handover-stamp-row{display:grid}}
         @media print{
@@ -245,8 +246,9 @@ export default function HandoverFormPage() {
           .handover-terms{font-size:8.5px;line-height:1.18;padding-left:13px}
           .handover-signatures{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px;margin-top:12px}
           .signature-box{height:50px}
+          .customer-signature-box{height:58px;padding-right:10px}
           .handover-signatures span{font-size:8px}
-          .handover-stamp-box{width:58px;height:38px;padding:3px;border-width:1px;bottom:6px}
+          .handover-stamp-box{width:58px;height:38px;padding:3px;border-width:1px;top:4px}
           .handover-stamp-box span{font-size:8px}
           .handover-table tr,.handover-check-grid,.handover-signatures{break-inside:avoid}
         }
