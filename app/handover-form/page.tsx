@@ -45,7 +45,8 @@ const terms = [
   'Smoking, drinking, banned substances, arms, ammunition and pets are not allowed inside the vehicle.',
   'Only the verified renter or authorised approved driver may drive the vehicle.',
   'Restricted areas and route rules shared by Ride Aura must be followed.',
-  'Customer agrees to return the vehicle on the agreed date/time and in the same condition, subject to normal use.'
+  'Customer agrees to return the vehicle on the agreed date/time and in the same condition, subject to normal use.',
+  'Customer accepts GPS tracking and agrees not to remove, damage or tamper with GPS, documents, number plate or vehicle accessories.'
 ];
 
 function Line({ label, wide = false }: { label: string; wide?: boolean }) {
@@ -80,6 +81,8 @@ export default function HandoverFormPage() {
           <Line label="Emergency Contact" />
           <Line label="Pickup Location" />
           <Line label="Return Location" />
+          <Line label="Customer Full Address" />
+          <Line label="Authorised Driver Name" />
         </div>
 
         <h2>Vehicle Details</h2>
@@ -93,6 +96,9 @@ export default function HandoverFormPage() {
           <Line label="Rate Per Day" />
           <Line label="Rate Per Hour" />
           <Line label="Security Deposit" />
+          <Line label="Helmet Count / Bike" />
+          <Line label="Helmet Condition" />
+          <Line label="GPS Device Status" />
         </div>
 
         <h2>Customer Documents Checked</h2>
@@ -103,6 +109,8 @@ export default function HandoverFormPage() {
           <label><input type="checkbox" /> International Driving License for NRI / Foreign Customer</label>
           <label><input type="checkbox" /> Payment / Deposit Received</label>
           <label><input type="checkbox" /> Online Booking Verified</label>
+          <label><input type="checkbox" /> Customer address verified</label>
+          <label><input type="checkbox" /> Approved driver verified</label>
         </div>
 
         <h2>Vehicle Papers & Accessories</h2>
@@ -136,6 +144,19 @@ export default function HandoverFormPage() {
           <Line label="Payment Mode" />
           <Line label="Transaction ID" />
           <Line label="Staff Name" />
+        </div>
+
+        <h2>Return Inspection</h2>
+        <div className="handover-grid three">
+          <Line label="Return Date & Time" />
+          <Line label="Return KM" />
+          <Line label="Return Fuel Level" />
+          <Line label="New Damage / Scratch" />
+          <Line label="Late Return Charge" />
+          <Line label="Extra KM Charge" />
+          <Line label="Key Returned" />
+          <Line label="Accessories Returned" />
+          <Line label="Deposit Refund / Balance" />
         </div>
 
         <h2>Terms Acceptance</h2>
@@ -196,23 +217,23 @@ export default function HandoverFormPage() {
           .handover-head p{font-size:11px;margin-top:2px}
           .handover-brand{display:grid!important;background:#fff;border:0;padding:0;min-width:150px}
           .handover-brand img{width:150px;height:44px;filter:none}
-          .handover-sheet h2{font-size:12px;margin:9px 0 5px;padding-bottom:3px;break-after:avoid}
-          .handover-grid{gap:5px 9px}
+          .handover-sheet h2{font-size:11px;margin:7px 0 4px;padding-bottom:2px;break-after:avoid}
+          .handover-grid{gap:4px 8px}
           .handover-grid.two{grid-template-columns:repeat(4,1fr)}
           .handover-grid.three{grid-template-columns:repeat(3,1fr)}
           .handover-line{gap:2px}
           .handover-line.wide{margin-top:7px}
           .handover-line span{font-size:8px}
-          .handover-line input{min-height:20px}
-          .handover-check-grid{grid-template-columns:repeat(4,1fr);gap:4px 8px}
-          .handover-check-grid label{font-size:9px;gap:4px;line-height:1.2}
+          .handover-line input{min-height:18px}
+          .handover-check-grid{grid-template-columns:repeat(4,1fr);gap:3px 7px}
+          .handover-check-grid label{font-size:8.5px;gap:4px;line-height:1.15}
           .handover-check-grid input,.handover-table input{width:11px;height:11px;min-height:11px}
           .handover-table{font-size:9px}
-          .handover-table th,.handover-table td{padding:3px 5px}
+          .handover-table th,.handover-table td{padding:2px 5px}
           .handover-table td:nth-child(2){width:34px}
-          .handover-terms{font-size:9px;line-height:1.25;padding-left:14px}
-          .handover-signatures{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px;margin-top:16px}
-          .signature-box{height:54px}
+          .handover-terms{font-size:8.5px;line-height:1.18;padding-left:13px}
+          .handover-signatures{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px;margin-top:12px}
+          .signature-box{height:50px}
           .handover-signatures span{font-size:8px}
           .handover-stamp-box{width:58px;height:38px;padding:3px;border-width:1px;bottom:6px}
           .handover-stamp-box span{font-size:8px}
