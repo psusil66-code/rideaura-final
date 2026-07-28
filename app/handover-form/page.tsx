@@ -191,7 +191,11 @@ export default function HandoverFormPage() {
         .handover-stamp-box span{font-size:12px;font-weight:900;color:#07162d;text-transform:uppercase;line-height:1.35}
         .handover-stamp-row p{margin:0 0 8px;color:#526173;font-size:13px;font-weight:800}
         @media(max-width:760px){.handover-page{padding-top:110px}.handover-head,.handover-grid.two,.handover-grid.three,.handover-check-grid,.handover-signatures{grid-template-columns:1fr;display:grid}.handover-actions{display:grid}.handover-brand{min-width:0}.handover-brand img{width:180px}.handover-stamp-row{display:grid}}
-        @media print{.top,.site-footer,.handover-actions,.whatsapp-float{display:none!important}.handover-page{padding:0;background:#fff}.handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}.handover-brand{background:#06172f!important;border:1px solid #111!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.handover-sheet h2{break-after:avoid}.handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}body{background:#fff}}
+        @media print{.handover-actions,.handover-brand{display:none!important}.handover-page{padding:0;background:#fff}.handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}.handover-head{display:block;border-bottom:2px solid #07162d;padding-bottom:10px;margin-bottom:14px}.handover-sheet h2{break-after:avoid}.handover-table tr,.handover-check-grid,.handover-signatures,.handover-stamp-row{break-inside:avoid}}
+      `}</style>
+      <style jsx global>{`
+        @page{margin:12mm}
+        @media print{.top,.site-footer,.whatsapp-float{display:none!important}body{background:#fff!important}}
       `}</style>
     </main>
   );
