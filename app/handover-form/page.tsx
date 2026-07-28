@@ -64,6 +64,7 @@ export default function HandoverFormPage() {
       <section className="handover-sheet">
         <div className="handover-watermark" aria-hidden="true">
           <img src="/rideaura-logo-navbar.png" alt="" />
+          <strong>RIDE AURA</strong>
         </div>
         <header className="handover-head">
           <div>
@@ -185,8 +186,9 @@ export default function HandoverFormPage() {
         .handover-actions{max-width:980px;margin:0 auto 18px;display:flex;gap:12px;justify-content:flex-end}
         .handover-sheet{position:relative;max-width:980px;margin:auto;background:#fff;border:1px solid #cfd8e3;padding:28px;box-shadow:0 18px 45px rgba(15,23,42,.12);overflow:hidden}
         .handover-sheet>*:not(.handover-watermark){position:relative;z-index:1}
-        .handover-watermark{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:0}
-        .handover-watermark img{width:min(620px,82%);opacity:.045;transform:rotate(-18deg)}
+        .handover-watermark{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:0;transform:rotate(-18deg)}
+        .handover-watermark img{width:min(620px,82%);opacity:.10}
+        .handover-watermark strong{position:absolute;font-size:96px;letter-spacing:10px;color:#07162d;opacity:.055;white-space:nowrap}
         .handover-head{display:flex;justify-content:space-between;gap:24px;align-items:center;border-bottom:3px solid #07162d;padding-bottom:18px;margin-bottom:20px}
         .handover-head h1{margin:0;color:#07162d;font-size:30px}
         .handover-head p{margin:6px 0 0;color:#526173;font-weight:800}
@@ -218,7 +220,9 @@ export default function HandoverFormPage() {
           .handover-actions{display:none!important}
           .handover-page{padding:0;background:#fff}
           .handover-sheet{box-shadow:none;border:0;max-width:none;padding:0}
-          .handover-watermark img{width:520px;opacity:.055;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+          .handover-watermark{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+          .handover-watermark img{width:520px;opacity:.12}
+          .handover-watermark strong{font-size:82px;opacity:.07}
           .handover-head{display:flex;border-bottom:2px solid #07162d;padding-bottom:6px;margin-bottom:8px;gap:12px}
           .handover-head h1{font-size:20px}
           .handover-head p{font-size:11px;margin-top:2px}
