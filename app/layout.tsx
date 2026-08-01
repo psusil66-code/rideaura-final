@@ -7,17 +7,21 @@ import Header from './header';
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.rideauraselfdrive.co.in'),
   title: {
-    default: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
+    default: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
     template: '%s | Ride Aura Self Drive'
   },
-  description: 'Ride Aura Self Drive offers self-drive car rental and bike rental in Bhubaneswar, Odisha with hourly, daily, airport pickup, railway station pickup and outstation trip support.',
+  description: 'Ride Aura Self Drive offers bike rental service and self-drive car rental in Bhubaneswar, Odisha with hourly, daily, airport pickup, railway station pickup and outstation trip support.',
   keywords: [
     'Ride Aura Self Drive',
     'car rental Bhubaneswar',
     'self drive car Bhubaneswar',
     'self drive car rental Bhubaneswar',
     'bike rental Bhubaneswar',
+    'bike rental service in Bhubaneswar',
+    'Bhubaneswar bike rent',
+    'bike rent near me Bhubaneswar',
     'self drive bike rental Bhubaneswar',
+    'scooter rental Bhubaneswar',
     'car hire Bhubaneswar',
     'rental car near me',
     'Bhubaneswar airport car rental',
@@ -27,8 +31,8 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   openGraph: {
-    title: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
-    description: 'Book self-drive cars and bikes in Bhubaneswar for city travel, airport pickup, railway station pickup, Puri, Konark, Chilika and Odisha road trips.',
+    title: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
+    description: 'Book bikes, scooters and self-drive cars in Bhubaneswar for city travel, airport pickup, railway station pickup, Puri, Konark, Chilika and Odisha road trips.',
     url: 'https://www.rideauraselfdrive.co.in',
     siteName: 'Ride Aura Self Drive',
     locale: 'en_IN',
@@ -37,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
-    description: 'Self-drive car rental and bike rental service in Bhubaneswar, Odisha.'
+    title: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
+    description: 'Bike rental service, scooter rental and self-drive car rental in Bhubaneswar, Odisha.'
   },
   robots: {
     index: true,
@@ -65,7 +69,7 @@ const localBusinessSchema = {
   url: 'https://www.rideauraselfdrive.co.in',
   logo: 'https://www.rideauraselfdrive.co.in/rideaura-logo-navbar.png',
   image: 'https://www.rideauraselfdrive.co.in/odisha-hero-cars.png',
-  description: 'Ride Aura Self Drive provides self-drive car rental and bike rental services in Bhubaneswar, Odisha for hourly, daily, weekend, airport pickup, railway station pickup and outstation trips.',
+  description: 'Ride Aura Self Drive provides bike rental service, scooter rental and self-drive car rental services in Bhubaneswar, Odisha for hourly, daily, weekend, airport pickup, railway station pickup and outstation trips.',
   email: 'booking@rideauraselfdrive.co.in',
   telephone: ['+91 91140 30650', '+91 63716 00719'],
   priceRange: 'Rs. 500+',
@@ -101,7 +105,15 @@ const localBusinessSchema = {
         itemOffered: {
           '@type': 'Service',
           name: 'Bike Rental in Bhubaneswar',
-          serviceType: 'Self drive bike rental'
+          serviceType: 'Bike rental service in Bhubaneswar'
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Scooter Rental in Bhubaneswar',
+          serviceType: 'Scooter rental and two-wheeler rental'
         }
       },
       {
