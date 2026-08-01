@@ -1,11 +1,53 @@
 import './globals.css';
 import './visual-overrides.css';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import Header from './header';
 
-export const metadata = {
-  title: 'Ride Aura Self Drive | Odisha Self-Drive Car and Bike Rental',
-  description: 'Book self-drive cars and bikes in Odisha with Ride Aura Self Drive at rideauraselfdrive.co.in'
+export const metadata: Metadata = {
+  metadataBase: new URL('https://www.rideauraselfdrive.co.in'),
+  title: {
+    default: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
+    template: '%s | Ride Aura Self Drive'
+  },
+  description: 'Ride Aura Self Drive offers self-drive car rental and bike rental in Bhubaneswar, Odisha with hourly, daily, airport pickup, railway station pickup and outstation trip support.',
+  keywords: [
+    'Ride Aura Self Drive',
+    'car rental Bhubaneswar',
+    'self drive car Bhubaneswar',
+    'self drive car rental Bhubaneswar',
+    'bike rental Bhubaneswar',
+    'self drive bike rental Bhubaneswar',
+    'car hire Bhubaneswar',
+    'rental car near me',
+    'Bhubaneswar airport car rental',
+    'Puri Konark Odisha self drive'
+  ],
+  alternates: {
+    canonical: '/'
+  },
+  openGraph: {
+    title: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
+    description: 'Book self-drive cars and bikes in Bhubaneswar for city travel, airport pickup, railway station pickup, Puri, Konark, Chilika and Odisha road trips.',
+    url: 'https://www.rideauraselfdrive.co.in',
+    siteName: 'Ride Aura Self Drive',
+    locale: 'en_IN',
+    type: 'website',
+    images: [{ url: '/odisha-hero-cars.png', width: 1536, height: 864, alt: 'Ride Aura Self Drive car and bike rental in Odisha' }]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ride Aura Self Drive | Self Drive Car & Bike Rental in Bhubaneswar',
+    description: 'Self-drive car rental and bike rental service in Bhubaneswar, Odisha.'
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true
+    }
+  }
 };
 
 const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919114030650';
@@ -14,9 +56,71 @@ const secondPhone = '916371600719';
 const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/ride_aura_0650?igsh=MTBkMWwxdHpwdnBkcw==';
 const facebookUrl = process.env.NEXT_PUBLIC_FACEBOOK_URL || '#';
 const officeAddress = <>Plot No-1155/3939<br/>Soubhagya Nagar, Bank Colony<br/>Near SBI ATM, Delta<br/>Bhubaneswar, Odisha - 751003</>;
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRental',
+  '@id': 'https://www.rideauraselfdrive.co.in/#localbusiness',
+  name: 'Ride Aura Self Drive',
+  alternateName: 'Ride Aura',
+  url: 'https://www.rideauraselfdrive.co.in',
+  logo: 'https://www.rideauraselfdrive.co.in/rideaura-logo-navbar.png',
+  image: 'https://www.rideauraselfdrive.co.in/odisha-hero-cars.png',
+  description: 'Ride Aura Self Drive provides self-drive car rental and bike rental services in Bhubaneswar, Odisha for hourly, daily, weekend, airport pickup, railway station pickup and outstation trips.',
+  email: 'booking@rideauraselfdrive.co.in',
+  telephone: ['+91 91140 30650', '+91 63716 00719'],
+  priceRange: 'Rs. 500+',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Plot No-1155/3939, Soubhagya Nagar, Bank Colony, Near SBI ATM, Delta',
+    addressLocality: 'Bhubaneswar',
+    addressRegion: 'Odisha',
+    postalCode: '751003',
+    addressCountry: 'IN'
+  },
+  areaServed: [
+    'Bhubaneswar',
+    'Puri',
+    'Konark',
+    'Chilika',
+    'Odisha'
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Ride Aura Self Drive Rentals',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Self Drive Car Rental in Bhubaneswar',
+          serviceType: 'Self drive car rental'
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Bike Rental in Bhubaneswar',
+          serviceType: 'Self drive bike rental'
+        }
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Airport and Railway Station Pickup Support',
+          serviceType: 'Vehicle rental pickup support'
+        }
+      }
+    ]
+  },
+  sameAs: [
+    'https://www.instagram.com/ride_aura_0650?igsh=MTBkMWwxdHpwdnBkcw=='
+  ]
+};
 
 function Footer(){
   return <footer className="site-footer"><div className="container footer-grid"><div><h3>Ride Aura Self Drive</h3><p><strong>Your Ride. Your Route. Your Freedom.</strong></p><p>Reliable self-drive car and bike rentals from Bhubaneswar for journeys across Odisha.</p><p><strong>Rooted in Odisha. Driven by Freedom.</strong></p></div><div><h3>Quick Links</h3><ul><li><Link href="/">Home</Link></li><li><Link href="/about">About Us</Link></li><li><Link href="/#fleet">Our Fleet</Link></li><li><Link href="/#why">Services</Link></li><li><Link href="/faq">FAQ</Link></li><li><Link href="/terms">Terms & Conditions</Link></li></ul></div><div><h3>Pickup Convenience</h3><ul><li>Bhubaneswar Airport Pickup</li><li>Bhubaneswar Railway Station Pickup</li><li>Serving Across Odisha</li><li>Nearly 10 Years of Experience</li></ul></div><div><h3>Contact</h3><div className="socials"><a className="social-icon facebook" href={facebookUrl} aria-label="Facebook" target="_blank" rel="noopener noreferrer">f</a><a className="social-icon instagram" href={instagramUrl} aria-label="Instagram" target="_blank" rel="noopener noreferrer">IG</a><a className="social-icon whatsapp" href={whatsappUrl} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">WA</a></div><p><strong>Address:</strong><br/>{officeAddress}</p><p><strong>Phone:</strong><br/><a href={`tel:+${whatsappNumber}`}>+91 91140 30650</a><br/><a href={`tel:+${secondPhone}`}>+91 63716 00719</a></p><p><strong>Email:</strong><br/><a href="mailto:booking@rideauraselfdrive.co.in">booking@rideauraselfdrive.co.in</a></p></div></div><div className="container footer-bottom">&copy; Ride Aura Self Drive. All Rights Reserved.</div></footer>
 }
 
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body id="home"><Header/>{children}<Footer/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body id="home"><script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}}/><Header/>{children}<Footer/></body></html>}
