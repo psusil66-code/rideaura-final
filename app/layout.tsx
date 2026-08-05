@@ -7,21 +7,29 @@ import Header from './header';
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.rideauraselfdrive.co.in'),
   title: {
-    default: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
+    default: 'Ride Aura Self Drive | Best Car & Bike Rental Service in Bhubaneswar',
     template: '%s | Ride Aura Self Drive'
   },
-  description: 'Ride Aura Self Drive offers bike rental service and self-drive car rental in Bhubaneswar, Odisha with hourly, daily, airport pickup, railway station pickup and outstation trip support.',
+  description: 'Ride Aura Self Drive offers car rental service, bike rental service, self-drive cars and self-drive bikes in Bhubaneswar, Odisha for hourly, daily, airport pickup and outstation trips.',
   keywords: [
     'Ride Aura Self Drive',
+    'best car rental service in Bhubaneswar',
+    'best bike rental service in Bhubaneswar',
     'car rental Bhubaneswar',
+    'car rental service in Bhubaneswar',
     'self drive car Bhubaneswar',
+    'car self drive in Bhubaneswar',
+    'selfdrive near me',
+    'self drive near me',
     'self drive car rental Bhubaneswar',
     'bike rental Bhubaneswar',
     'bike rental service in Bhubaneswar',
+    'bike self drive service in Bhubaneswar',
     'Bhubaneswar bike rent',
     'bike rent near me Bhubaneswar',
     'self drive bike rental Bhubaneswar',
     'scooter rental Bhubaneswar',
+    'top 10 self drive in Bhubaneswar',
     'car hire Bhubaneswar',
     'rental car near me',
     'Bhubaneswar airport car rental',
@@ -31,7 +39,7 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   openGraph: {
-    title: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
+    title: 'Ride Aura Self Drive | Best Car & Bike Rental Service in Bhubaneswar',
     description: 'Book bikes, scooters and self-drive cars in Bhubaneswar for city travel, airport pickup, railway station pickup, Puri, Konark, Chilika and Odisha road trips.',
     url: 'https://www.rideauraselfdrive.co.in',
     siteName: 'Ride Aura Self Drive',
@@ -41,8 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ride Aura Self Drive | Bike Rental & Self Drive Car Rental in Bhubaneswar',
-    description: 'Bike rental service, scooter rental and self-drive car rental in Bhubaneswar, Odisha.'
+    title: 'Ride Aura Self Drive | Best Car & Bike Rental Service in Bhubaneswar',
+    description: 'Car rental service, bike rental service, scooter rental and self-drive car rental in Bhubaneswar, Odisha.'
   },
   robots: {
     index: true,
@@ -69,7 +77,7 @@ const localBusinessSchema = {
   url: 'https://www.rideauraselfdrive.co.in',
   logo: 'https://www.rideauraselfdrive.co.in/rideaura-logo-navbar.png',
   image: 'https://www.rideauraselfdrive.co.in/odisha-hero-cars.png',
-  description: 'Ride Aura Self Drive provides bike rental service, scooter rental and self-drive car rental services in Bhubaneswar, Odisha for hourly, daily, weekend, airport pickup, railway station pickup and outstation trips.',
+  description: 'Ride Aura Self Drive provides car rental service, bike rental service, scooter rental, self-drive car rental and bike self-drive service in Bhubaneswar, Odisha for hourly, daily, weekend, airport pickup, railway station pickup and outstation trips.',
   email: 'booking@rideauraselfdrive.co.in',
   telephone: ['+91 91140 30650', '+91 63716 00719'],
   priceRange: 'Rs. 500+',
@@ -96,16 +104,16 @@ const localBusinessSchema = {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Self Drive Car Rental in Bhubaneswar',
-          serviceType: 'Self drive car rental'
+          name: 'Best Car Rental Service in Bhubaneswar',
+          serviceType: 'Self drive car rental and car self drive in Bhubaneswar'
         }
       },
       {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Bike Rental in Bhubaneswar',
-          serviceType: 'Bike rental service in Bhubaneswar'
+          name: 'Best Bike Rental Service in Bhubaneswar',
+          serviceType: 'Bike rental service and bike self drive service in Bhubaneswar'
         }
       },
       {

@@ -33,8 +33,8 @@ export default function Bikes() {
       <div className="container">
         <div className="title">
           <span className="eyebrow">Ride Aura Bikes</span>
-          <h2>Self-Drive Bike Rentals</h2>
-          <p>Browse only bike and scooter rentals added from the Ride Aura admin dashboard.</p>
+          <h2>Best Bike Rental Service in Bhubaneswar</h2>
+          <p>Browse Ride Aura bikes and scooters for bike rental service in Bhubaneswar, bike self drive service in Bhubaneswar, bike rent near me and self-drive two-wheeler rentals.</p>
         </div>
         {loading ? (
           <div className="panel">Loading Ride Aura bikes...</div>

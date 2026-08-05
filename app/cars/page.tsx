@@ -33,8 +33,8 @@ export default function Cars() {
       <div className="container">
         <div className="title">
           <span className="eyebrow">Ride Aura Cars</span>
-          <h2>Self-Drive Cars</h2>
-          <p>Browse only car rentals added from the Ride Aura admin dashboard.</p>
+          <h2>Best Self-Drive Car Rental Service in Bhubaneswar</h2>
+          <p>Browse Ride Aura cars for car rental service in Bhubaneswar, car self drive in Bhubaneswar, self drive near me searches, airport pickup, railway station pickup and Odisha trips.</p>
         </div>
         {loading ? (
           <div className="panel">Loading Ride Aura vehicles...</div>
